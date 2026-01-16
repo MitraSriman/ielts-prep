@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>IELTS Computer Based Practice Test</title>
+<title>IELTS CBT Practice Test</title>
 <style>
 body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f5f7fa}
 header{background:#0a3d62;color:#fff;padding:15px;text-align:center}
@@ -11,128 +11,112 @@ header{background:#0a3d62;color:#fff;padding:15px;text-align:center}
 .question{margin-bottom:15px}
 .timer{font-weight:bold;color:#c0392b}
 button{padding:8px 12px;margin:5px 0}
-.hidden{display:none}
+input{width:90%;padding:5px}
 </style>
 </head>
 <body>
 <header>
-<h2>IELTS Academic – Computer Based Practice Test</h2>
+<h2>IELTS Academic – CBT Practice Test</h2>
 <p class="timer" id="timer">Time: 60:00</p>
 </header><div class="container">
 <div class="left" id="passageArea"></div>
 <div class="right" id="questionArea"></div>
 </div><footer style="text-align:center;padding:10px">
-<button onclick="loadMockTest(0)">Mock Test 1</button>
-<button onclick="loadMockTest(1)">Mock Test 2</button>
 <button onclick="loadReading()">Reading Test</button>
 <button onclick="loadListening()">Listening Test</button>
 <button onclick="submitTest()">Submit Test</button>
 <button onclick="showHistory()">View Result History</button>
 </footer><script>
 // TIMER
-let time = 3600;
-let timerInterval;
+let time = 3600; let timerInterval;
 function startTimer(){
   clearInterval(timerInterval);
-  timerInterval = setInterval(()=>{
-    let m=Math.floor(time/60);
-    let s=time%60;
+  timerInterval=setInterval(()=>{
+    let m=Math.floor(time/60),s=time%60;
     document.getElementById('timer').innerText=`Time: ${m}:${s<10?'0':''}${s}`;
     if(time>0) time--;
   },1000);
 }
 
-// MOCK TEST DATA
-let currentTest=0;
-const mockTests=[
-  {
-    name:"Mock Test 1",
-    readingPassages:[
-      {title:"Passage 1: The Rise of Urban Farming", text:`Urban farming refers to the practice of cultivating crops and raising livestock within cities. Rooftop gardens, vertical farms, and community plots provide fresh produce and reduce carbon emissions. Supporters highlight community bonds and mental well-being. Critics mention space limits and high initial costs.`},
-      {title:"Passage 2: Sleep and Human Performance", text:`Sleep is essential for health. Adults need 7-9 hours per night. Lack of sleep affects memory, concentration, and immunity. Modern lifestyles and screen use disrupt natural cycles.`},
-      {title:"Passage 3: The Development of Paper", text:`Paper was invented in China over 2000 years ago, later spread globally. It transformed education and record keeping. Digital media is dominant but paper remains due to affordability and accessibility.`}
-    ],
-    readingQuestions:[
-"carbon","true","true","false","true","true","false","vertical farms","limited space","rooftops","transportation","community bonds","high",
-"seven to nine","true","false","true","true","true","immune","illness","screen","sleep","well-being","sleep",
-"china","true","false","true","reliability","limited","two thousand","han","education","digital","regions","accessibility","technology","administration"
-    ],
-    readingQuestionsText:[
-"Urban farming mainly helps reduce what type of emissions?","Urban farming improves mental health. TRUE/FALSE","Vertical farms are used in urban areas. TRUE/FALSE","Urban farming eliminates food transport entirely. TRUE/FALSE","Space limitation is a challenge. TRUE/FALSE","Community bonds are strengthened. TRUE/FALSE","Urban soil is always safe. TRUE/FALSE","Which method is mentioned?","What is a criticism?","Where are gardens built?","What does urban farming reduce?","What do supporters argue?","Initial costs are described as what?",
-"How many hours of sleep do adults need?","Sleep affects memory. TRUE/FALSE","Sleep deprivation improves immunity. TRUE/FALSE","Modern lifestyles affect sleep. TRUE/FALSE","Shift work disrupts sleep. TRUE/FALSE","Sleep is linked to illness. TRUE/FALSE","Which system is weakened?","What risk increases?","What exposure disrupts sleep?","Memory is affected by what?","Sleep affects emotional what?","Screen use impacts what?",
-"Paper was invented where?","Paper spread through trade. TRUE/FALSE","Digital media ended paper use. TRUE/FALSE","Paper is affordable. TRUE/FALSE","Paper is reliable because of what?","Paper is used where technology is what?","Paper was invented how long ago?","Which dynasty invented paper?","What did paper transform?","What dominates information storage now?","Paper is accessible to whom?","Paper is still used because of what?","Limited access to what affects paper use?","Paper aided which field?"
-    ],
-    listeningScripts:[
-`The student plans to move in September. The weekly rent is 150 pounds and includes utilities. The room is on the second floor and requires a six month minimum stay.`,`The Riverside Sports Centre opened in April and is available to the general public. Free parking is provided for everyone and the gym equipment was imported from Germany.`,`The group project focuses on urban transport. Sarah writes the introduction. Research is done using online questionnaires. Presentation lasts 15 minutes and is held in the lecture hall.`,`The lecture explains that sustainability protects future needs. Renewable energy includes wind and solar power. Recycling reduces landfill waste and cooperation is required globally.`
-    ],
-    listeningAnswers:[
-"september","150","utilities","second","six","deposit","two","five","pets","email","april","general public","germany","indoor football and badminton","everyone","weekday","personal","healthy","10","management","urban transport","sarah","online questionnaires","15","time management","friday","eight","lecture hall","harris","pdf","needs","twentieth","intensive","carbon","landfill","solar","incentives","energy","environmental","cooperation"
-    ]
-  },
-  {
-    name:"Mock Test 2",
-    readingPassages:[], readingQuestions:[], readingQuestionsText:[], listeningScripts:[], listeningAnswers:[]
-  }
+// === READING SECTION ===
+const readingPassages=[
+  {title:"Passage 1: Urban Farming", text:`Urban farming has become popular worldwide. Rooftop gardens and community plots reduce transportation costs. Supporters highlight mental health and community benefits, but critics mention limited space and high costs.`},
+  {title:"Passage 2: Sleep and Health", text:`Sleep is critical for memory and recovery. Adults need 7-9 hours per night. Sleep deprivation affects focus, immunity, and long-term health. Screen usage can disrupt sleep patterns.`},
+  {title:"Passage 3: The History of Paper", text:`Paper was invented in China over 2000 years ago. It spread globally and transformed education and record keeping. Digital media is dominant, but paper remains widely used for accessibility and affordability.`}
 ];
 
-// LOAD READING
+const readingQuestionsText=[
+"1. Urban farming mainly reduces what type of emissions?","2. Urban farming improves mental health. TRUE/FALSE","3. Vertical farms are used in urban areas. TRUE/FALSE","4. Critics highlight space constraints. TRUE/FALSE","5. Initial costs are high. TRUE/FALSE","6. Which benefit does urban farming provide?","7. Where are rooftop gardens built?","8. How many passages are there?","9. Adults need how many hours of sleep?","10. Sleep deprivation affects which system?","11. Screen usage disrupts what?","12. Paper was invented in which country?","13. Paper is used because it is what?","14. Digital media is now what?","15. Paper transformed what aspect of society?","16. Sleep affects memory. TRUE/FALSE","17. Community plots reduce what?","18. Mental health benefits are TRUE/FALSE","19. Accessibility is why paper is still used. TRUE/FALSE","20. Paper invention was over how many years ago?","21. Sleep affects which risk?","22. Rooftop gardens help reduce what?","23. Paper is affordable. TRUE/FALSE","24. Sleep deprivation reduces what?","25. Urban farming affects which bonds?","26. How many passages are included?","27. Vertical farms provide what?","28. Paper invention impacted education. TRUE/FALSE","29. Sleep cycles are disrupted by what?","30. Community benefits are TRUE/FALSE","31. Sleep deprivation increases risk of what?","32. Where did paper spread next?","33. Rooftop gardens reduce what cost?","34. Paper is dominant or digital?","35. Mental health is improved by what?","36. Paper is reliable because of what?","37. Sleep affects which performance?","38. Initial costs are considered what?","39. Transportation costs are reduced. TRUE/FALSE","40. Digital media is dominant. TRUE/FALSE"
+];
+
+const readingAnswers=[
+"carbon","true","true","true","true","community","rooftops","3","7-9","immune","sleep cycles","china","affordable","dominant","education","true","transportation","true","true","2000","long-term illness","transportation","true","concentration","community","3","fresh produce","true","screen usage","true","chronic illness","islamic world","transportation","dominant","urban farming","accessibility","memory","high","transportation","dominant"
+];
+
 function loadReading(){
-  const test=mockTests[currentTest];
   time=3600; startTimer();
-  document.getElementById('passageArea').innerHTML=test.readingPassages.map(p=>`<h3>${p.title}</h3><p>${p.text}</p>`).join('');
-  document.getElementById('questionArea').innerHTML=test.readingQuestionsText.map((q,i)=>`<div class='question'><label>${i+1}. ${q}</label><br><input type='text' id='r${i+1}'></div>`).join('');
+  document.getElementById('passageArea').innerHTML=readingPassages.map(p=>`<h3>${p.title}</h3><p>${p.text}</p>`).join('');
+  document.getElementById('questionArea').innerHTML=readingQuestionsText.map((q,i)=>`<div class='question'><label>${q}</label><br><input type='text' id='r${i+1}'></div>`).join('');
 }
 
-// LOAD LISTENING WITH QUESTIONS
+// === LISTENING SECTION ===
+const listeningScripts=[
+`Section 1: Student renting accommodation. Rent: 150 pounds/week, utilities included, second floor, minimum six months.`,
+`Section 2: Riverside Sports Centre opened in April, open to public, free parking, gym equipment imported.`,
+`Section 3: Students discuss group project on urban transport. Presentation lasts 15 min, Sarah writes intro.`,
+`Section 4: Lecture on sustainability, renewable energy: wind and solar, recycling reduces landfill, global cooperation required.`
+];
+
+const listeningQuestionsText=[
+"1. When does the student plan to move in?","2. How much is the weekly rent?","3. What is included in the rent?","4. Which floor is the room on?","5. Minimum duration of stay?","6. What payment is needed before moving in?","7. How many people share the kitchen?","8. How far is the bus stop?","9. What is not allowed in the house?","10. Preferred contact method?",
+"11. When did the Sports Centre open?","12. Who can use the centre?","13. Where is the gym equipment from?","14. Which sports can be played?","15. Who can use free parking?","16. When are yoga classes held?","17. What training is offered?","18. What food is served in the cafe?","19. Closing time of the centre?","20. Which office handles complaints?",
+"21. What is the topic of the group project?","22. Who writes the introduction?","23. How will research be done?","24. How long is the presentation?","25. Main concern of the group?","26. When is the first draft due?","27. How many references are required?","28. Where is the presentation held?","29. Supervisor’s surname?","30. Final submission format?",
+"31. Sustainability protects what?","32. Which century popularised sustainability?","33. What type of farming causes deforestation?","34. Urban areas produce which emissions?","35. Recycling reduces which waste?","36. Wind and which power are renewable?","37. Governments use what to encourage sustainability?","38. Behaviour change reduces what consumption?","39. Education raises what awareness?","40. Sustainability requires global what?"
+];
+
+const listeningAnswers=[
+"september","150","utilities","second","six","deposit","two","five","pets","email","april","general public","germany","indoor football and badminton","everyone","weekday","personal","healthy","10","management","urban transport","sarah","online questionnaires","15","time management","friday","eight","lecture hall","harris","pdf","needs","twentieth","intensive","carbon","landfill","solar","incentives","energy","environmental","cooperation"
+];
+
 let played=[false,false,false,false];
 function playListening(i){
   if(played[i]){alert('This section can only be played once');return;}
-  let u=new SpeechSynthesisUtterance(mockTests[currentTest].listeningScripts[i]);
-  u.lang='en-GB'; u.rate=0.9; u.onend=()=>played[i]=true;
-  speechSynthesis.speak(u);
+  let u=new SpeechSynthesisUtterance(listeningScripts[i]); u.lang='en-GB'; u.rate=0.9;
+  u.onend=()=>played[i]=true; speechSynthesis.speak(u);
 }
+
 function loadListening(){
-  const test=mockTests[currentTest];
   time=2400; startTimer();
   document.getElementById('passageArea').innerHTML=`<h3>Listening Sections</h3>
-  <button onclick='playListening(0)'>Play Section 1</button>
-  <button onclick='playListening(1)'>Play Section 2</button>
-  <button onclick='playListening(2)'>Play Section 3</button>
-  <button onclick='playListening(3)'>Play Section 4</button>`;
-
-  const listeningQuestionsText = [
-    "1. When does the student plan to move in?","2. How much is the weekly rent?","3. What is included in the rent?","4. Which floor is the room on?","5. Minimum duration of stay?","6. What payment is needed before moving in?","7. How many people share the kitchen?","8. How far is the bus stop?","9. What is not allowed in the house?","10. Preferred contact method?",
-    "11. When did the Riverside Sports Centre open?","12. Who is it open for?","13. Where is the gym equipment from?","14. Which sports can you play there?","15. Who can use free parking?","16. When are yoga classes held?","17. What training is offered?","18. What food is served in the cafe?","19. Closing time of the centre?","20. Which office handles complaints?",
-    "21. What is the topic of the group project?","22. Who writes the introduction?","23. How will research be conducted?","24. How long is the presentation?","25. What is the main concern of the group?","26. When is the first draft due?","27. How many references are needed?","28. Where is the presentation held?","29. Supervisor's surname?","30. In what format is the final submission?",
-    "31. Sustainability protects future what?","32. Which century popularised sustainability?","33. What type of farming causes deforestation?","34. Urban areas produce which emissions?","35. Recycling reduces which waste?","36. Wind and which power are renewable?","37. Governments use what to encourage sustainability?","38. Behaviour change reduces what consumption?","39. Education raises what awareness?","40. Sustainability requires global what?"
-  ];
-
-  document.getElementById('questionArea').innerHTML = listeningQuestionsText.map((q,i)=>`<div class='question'><label>${q}</label><br><input id='l${i+1}'></div>`).join('');
+<button onclick='playListening(0)'>Play Section 1</button>
+<button onclick='playListening(1)'>Play Section 2</button>
+<button onclick='playListening(2)'>Play Section 3</button>
+<button onclick='playListening(3)'>Play Section 4</button>`;
+  document.getElementById('questionArea').innerHTML=listeningQuestionsText.map((q,i)=>`<div class='question'><label>${q}</label><br><input id='l${i+1}'></div>`).join('');
 }
 
-// SUBMIT TEST & SAVE HISTORY
+// === SCORING & HISTORY ===
 function band(score){if(score>=39)return 9;if(score>=37)return 8.5;if(score>=35)return 8;if(score>=32)return 7.5;if(score>=30)return 7;if(score>=26)return 6.5;if(score>=23)return 6;if(score>=18)return 5.5;if(score>=16)return 5;return 4.5;}
 function saveResult(r,l){
   const history=JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
-  history.push({date:new Date().toLocaleString(),test:mockTests[currentTest].name,reading:r,listening:l});
+  history.push({date:new Date().toLocaleString(),reading:r,listening:l});
   localStorage.setItem('ieltsHistory',JSON.stringify(history));
 }
 function showHistory(){
   const history=JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
   if(history.length===0){alert('No results yet'); return;}
-  alert(history.map(h=>`${h.date}\n${h.test}\nReading: ${h.reading}/40 Listening: ${h.listening}/40`).join('\n\n'));
+  alert(history.map(h=>`${h.date}\nReading: ${h.reading}/40 Listening: ${h.listening}/40`).join('\n\n'));
 }
+
 function submitTest(){
-  const test=mockTests[currentTest];
   let r=0,l=0;
-  test.readingAnswers.forEach((a,i)=>{let u=document.getElementById('r'+(i+1))?.value.toLowerCase().trim();if(u===a.toLowerCase())r++;});
-  test.listeningAnswers.forEach((a,i)=>{let u=document.getElementById('l'+(i+1))?.value.toLowerCase().trim();if(u===a.toLowerCase())l++;});
+  readingAnswers.forEach((a,i)=>{let u=document.getElementById('r'+(i+1))?.value.toLowerCase().trim();if(u===a.toLowerCase())r++;});
+  listeningAnswers.forEach((a,i)=>{let u=document.getElementById('l'+(i+1))?.value.toLowerCase().trim();if(u===a.toLowerCase())l++;});
   saveResult(r,l);
   alert(`Reading: ${r}/40 Band ${band(r)}\nListening: ${l}/40 Band ${band(l)}`);
 }
 
-function loadMockTest(index){currentTest=index; loadReading(); alert(`Loaded ${mockTests[index].name}`);}
-
+// Load default section
 loadReading();
 </script></body>
 </html>
