@@ -189,8 +189,17 @@ const listeningSections=[
 {id:"l40",q:"Sustainability requires global what?",answer:"cooperation"}]}
 ];
 
+// ===== MOCK TEST FLOW =====
 let currentListening=0; let played=[false,false,false,false];
+let currentReading=0;
 
+function startMockTest(id){
+  if(id!==1) return;
+  currentListening=0; played=[false,false,false,false];
+  loadListening();
+}
+
+// PLAY TTS
 function playListening(i){
   if(played[i]){alert('Already played'); return;}
   let u=new SpeechSynthesisUtterance(listeningSections[i].audio);
@@ -199,41 +208,20 @@ function playListening(i){
   speechSynthesis.speak(u);
 }
 
-// LOAD MOCK TEST 1
-function startMockTest(id){
-  if(id!==1) return;
-  currentListening=0; played=[false,false,false,false];
-  loadListening();
-}
-
 // LOAD LISTENING
 function loadListening(){
   time=2400; startTimer();
   const s=listeningSections[currentListening];
   let html=`<h3>${s.part}</h3><button onclick='playListening(${currentListening})'>▶ Play Audio</button>`;
-  if(s.mapImage){
-    html+=`<div class='map-img'><img src='${s.mapImage}' style='width:100%;height:100%'>`;
-    const labels=[
-      {text:'Reading Rooms',top:'50px',left:'30px',qid:'l21',val:'left'},
-      {text:'Computer Stations',top:'50px',left:'200px',qid:'l22',val:'right'},
-      {text:'Group Tables',top:'150px',left:'120px',qid:'l23',val:'center'},
-      {text:'Staff Office',top:'250px',left:'200px',qid:'l24',val:'back'},
-      {text:'Lounge',top:'250px',left:'30px',qid:'l25',val:'entrance'}
-    ];
-    labels.forEach(l=>{html+=`<div class='map-label' style='top:${l.top};left:${l.left}' onclick="document.getElementById('${l.qid}').value='${l.val}'">${l.text}</div>`;});
-    html+="</div>";
-  }
   s.questions.forEach((q,j)=>{html+=`<div class='question'><label>${j+1}. ${q.q}</label><br><input type='text' id='${q.id}'></div>`;});
   document.getElementById('leftPane').innerHTML = html;
   document.getElementById('rightPane').innerHTML = `<button onclick='prevListening()'>Previous Section</button> <button onclick='nextListening()'>Next Section</button>`;
 }
 
-// LISTENING NAV
 function nextListening(){if(currentListening<listeningSections.length-1){currentListening++; loadListening();} else {loadReading(0);}}
 function prevListening(){if(currentListening>0){currentListening--; loadListening();}}
 
 // LOAD READING
-let currentReading=0;
 function loadReading(index){
   currentReading=index; time=3600; startTimer();
   const p = readingPassages[currentReading];
@@ -247,9 +235,10 @@ function loadReading(index){
   let navHTML = "";
   if(currentReading>0) navHTML+=`<button onclick='loadReading(${currentReading-1})'>Previous Passage</button>`;
   if(currentReading<readingPassages.length-1) navHTML+=`<button onclick='loadReading(${currentReading+1})'>Next Passage</button>`;
-  navHTML+=`<button onclick='submitTest()'>Submit Test</button>`;
+  else navHTML+=`<button onclick='loadWriting()'>Next: Writing Section</button>`;
   document.getElementById('rightPane').innerHTML = navHTML;
 }
+
 // ===== LOAD WRITING =====
 function loadWriting(){
   clearTimer(); time=3600; startTimer();
@@ -273,42 +262,6 @@ function loadWriting(){
   `;
 }
 
-// SUBMIT TEST
-function submitTest(){
-  clearTimer();
-  // LISTENING SCORE
-  let lscore=0;
-  listeningSections.forEach(sec=>sec.questions.forEach(q=>{
-    let ans=document.getElementById(q.id)?.value.toLowerCase().trim();
-    if(ans===q.answer.toLowerCase()) lscore++;
-  }));
-  let lband = getBand(lscore);
-
-  // READING SCORE
-  let rscore=0;
-  readingQuestions.forEach((q,i)=>{
-    let ans;
-    if(q.type==='TFNG' || q.type==='MC') ans=document.getElementById(`r${q.passage}_${i}`)?.value.toLowerCase().trim();
-    else ans=document.getElementById(`r${q.passage}_${i}`)?.value.toLowerCase().trim();
-    if(ans===q.answer.toLowerCase()) rscore++;
-  });
-  let rband = getBand(rscore);
-
-  alert(`Listening: ${lscore}/40 | Band: ${lband}\nReading: ${rscore}/40 | Band: ${rband}`);
-}
-function getBand(score){
-  if(score>=39) return 9;
-  if(score>=37) return 8.5;
-  if(score>=35) return 8;
-  if(score>=32) return 7.5;
-  if(score>=30) return 7;
-  if(score>=26) return 6.5;
-  if(score>=23) return 6;
-  if(score>=18) return 5.5;
-  if(score>=16) return 5;
-  return 4.5;
-}
-  
 // ===== IMPROVED WRITING SCORING =====
 function submitWriting(){
   const task1=document.getElementById('w1').value.trim();
@@ -347,9 +300,11 @@ function submitWriting(){
   localStorage.setItem('writingTask1',task1);
   localStorage.setItem('writingTask2',task2);
 
-// INITIAL LOAD
-showHome();
+  showHome();
+}
 
+// ===== INITIAL LOAD =====
+showHome();
 </script>
 </body>
 </html>
