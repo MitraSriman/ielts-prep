@@ -261,7 +261,55 @@ function loadWriting(){
 <br><button onclick="submitWriting()">Submit Writing</button>
   `;
 }
+function submitMockTest(){
 
+  // ==== LISTENING SCORING ====
+  let listeningScore=0;
+  listeningSections.forEach(sec=>{
+    sec.questions.forEach(q=>{
+      let user=document.getElementById(q.id)?.value.trim().toLowerCase();
+      if(user && user===q.answer.toLowerCase()) listeningScore++;
+    });
+  });
+
+  let listeningBand=0;
+  if(listeningScore>=40) listeningBand=9;
+  else if(listeningScore>=37) listeningBand=8.5;
+  else if(listeningScore>=35) listeningBand=8;
+  else if(listeningScore>=32) listeningBand=7.5;
+  else if(listeningScore>=30) listeningBand=7;
+  else if(listeningScore>=26) listeningBand=6.5;
+  else if(listeningScore>=23) listeningBand=6;
+  else if(listeningScore>=18) listeningBand=5.5;
+  else if(listeningScore>=16) listeningBand=5;
+  else listeningBand=4.5;
+
+  // ==== READING SCORING ====
+  let readingScore=0;
+  readingQuestions.forEach((q,i)=>{
+    let el=document.getElementById(`r${q.passage}_${i}`);
+    if(!el) return;
+    let user=el.value.trim().toLowerCase();
+    if(q.type==='TFNG'){
+      if(user===q.answer.toLowerCase()) readingScore++;
+    } else if(q.type==='MC'){
+      if(user===q.answer.toLowerCase()) readingScore++;
+    } else if(q.type==='SC'){
+      if(user===q.answer.toLowerCase()) readingScore++;
+    }
+  });
+
+  let readingBand=0;
+  if(readingScore>=40) readingBand=9;
+  else if(readingScore>=37) readingBand=8.5;
+  else if(readingScore>=35) readingBand=8;
+  else if(readingScore>=32) readingBand=7.5;
+  else if(readingScore>=30) readingBand=7;
+  else if(readingScore>=26) readingBand=6.5;
+  else if(readingScore>=23) readingBand=6;
+  else if(readingScore>=18) readingBand=5.5;
+  else if(readingScore>=16) readingBand=5;
+  else readingBand=4.5;
 // ===== IMPROVED WRITING SCORING =====
 function submitWriting(){
   const task1=document.getElementById('w1').value.trim();
