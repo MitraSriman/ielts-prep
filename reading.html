@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IELTS Academic Reading – Mock Test 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f8; margin:0; }
+    header { background:#1e88e5; color:#fff; padding:20px; text-align:center; }
+    .container { max-width:1000px; margin:auto; padding:20px; }
+    .card { background:#fff; padding:20px; border-radius:10px; margin-bottom:20px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    h2 { color:#1e88e5; }
+    .question { margin:12px 0; }
+    .timer { font-size:18px; font-weight:bold; color:#d32f2f; text-align:right; }
+    button { background:#1e88e5; color:white; border:none; padding:10px 16px; border-radius:6px; cursor:pointer; }
+  </style>
+</head>
+<body><header>
+  <h1>IELTS Academic Reading – Mock Test 1</h1>
+  <p>60 minutes | 40 questions | Real exam format</p>
+</header><div class="container">
+  <div class="timer" id="timer">Time left: 60:00</div>  <div class="card">
+    <h2>Reading Passage 1</h2>
+    <p>
+      In many urban areas, public libraries are undergoing a quiet transformation. Once regarded solely as places to borrow books, modern libraries now function as community hubs, offering access to digital resources, training workshops, and shared working spaces. This shift has been driven partly by declining physical book loans and partly by the growing demand for free public access to technology.
+      <br><br>
+      Librarians today are required to possess skills far beyond traditional cataloguing. They often assist visitors with online job applications, digital literacy, and even basic programming. As governments reduce funding, libraries are increasingly required to justify their existence by demonstrating measurable social impact rather than cultural value alone.
+    </p><h3>Questions 1–5 (True / False / Not Given)</h3>
+
+<div class="question">1. Modern libraries no longer lend physical books.<br>
+  <input type="radio" name="q1"> True
+  <input type="radio" name="q1"> False
+  <input type="radio" name="q1"> Not Given
+</div>
+
+<div class="question">2. Libraries now provide access to digital technology.<br>
+  <input type="radio" name="q2"> True
+  <input type="radio" name="q2"> False
+  <input type="radio" name="q2"> Not Given
+</div>
+
+<div class="question">3. Librarians are no longer needed because of technology.<br>
+  <input type="radio" name="q3"> True
+  <input type="radio" name="q3"> False
+  <input type="radio" name="q3"> Not Given
+</div>
+
+<div class="question">4. Governments have increased library funding worldwide.<br>
+  <input type="radio" name="q4"> True
+  <input type="radio" name="q4"> False
+  <input type="radio" name="q4"> Not Given
+</div>
+
+<div class="question">5. Libraries must show social benefits to survive.<br>
+  <input type="radio" name="q5"> True
+  <input type="radio" name="q5"> False
+  <input type="radio" name="q5"> Not Given
+</div>
+
+  </div>  <div class="card">
+    <h2>Reading Passage 2</h2>
+    <p>
+      The use of renewable energy has expanded rapidly over the last two decades. Solar and wind power, once considered inefficient and costly, have become competitive with fossil fuels in many countries. This change has been driven by technological innovation, government incentives, and increasing public awareness of climate change.
+      <br><br>
+      However, challenges remain. Renewable energy sources are often intermittent, meaning that power generation does not always match demand. As a result, energy storage solutions such as batteries and hydrogen fuel systems are receiving increased attention from researchers and investors.
+    </p><h3>Questions 6–10 (Multiple Choice)</h3>
+
+<div class="question">6. Renewable energy became popular mainly because of:<br>
+  <input type="radio" name="q6"> A. Lower taxes<br>
+  <input type="radio" name="q6"> B. Technological improvements<br>
+  <input type="radio" name="q6"> C. Increased oil prices<br>
+  <input type="radio" name="q6"> D. Reduced electricity demand
+</div>
+
+<div class="question">7. What problem is mentioned regarding renewable energy?<br>
+  <input type="radio" name="q7"> A. High pollution levels<br>
+  <input type="radio" name="q7"> B. Intermittent supply<br>
+  <input type="radio" name="q7"> C. Lack of public support<br>
+  <input type="radio" name="q7"> D. Government opposition
+</div>
+
+  </div>  <div class="card">
+    <h2>Reading Passage 3</h2>
+    <p>
+      Psychological research into human motivation suggests that financial rewards are not always the most effective way to improve performance. While monetary incentives can increase output in simple, repetitive tasks, they may reduce creativity and long-term engagement in complex problem-solving activities.
+      <br><br>
+      Studies indicate that intrinsic motivation—such as personal satisfaction, autonomy, and purpose—plays a significant role in sustained productivity. Organisations that focus exclusively on financial incentives may therefore fail to achieve their desired outcomes.
+    </p><h3>Questions 11–15 (Sentence Completion)</h3>
+
+<div class="question">11. Financial rewards work best for __________ tasks.</div>
+<div class="question">12. Creativity may decrease when motivation is purely __________.</div>
+<div class="question">13. Intrinsic motivation includes feelings of __________.</div>
+
+  </div><button onclick="alert('Answer key can be added next')">Submit Test</button>
+
+</div><script>
+  let time = 3600;
+  const timerEl = document.getElementById('timer');
+
+  setInterval(() => {
+    time--;
+    const min = Math.floor(time / 60);
+    const sec = time % 60;
+    timerEl.textContent = `Time left: ${min}:${sec.toString().padStart(2,'0')}`;
+    if (time <= 0) alert('Time is up!');
+  }, 1000);
+</script></body>
+</html>
