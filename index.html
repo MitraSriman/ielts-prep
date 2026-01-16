@@ -83,7 +83,7 @@ function loadReading(){
   document.getElementById('questionArea').innerHTML=test.readingQuestionsText.map((q,i)=>`<div class='question'><label>${i+1}. ${q}</label><br><input type='text' id='r${i+1}'></div>`).join('');
 }
 
-// LOAD LISTENING
+// LOAD LISTENING WITH QUESTIONS
 let played=[false,false,false,false];
 function playListening(i){
   if(played[i]){alert('This section can only be played once');return;}
@@ -94,8 +94,20 @@ function playListening(i){
 function loadListening(){
   const test=mockTests[currentTest];
   time=2400; startTimer();
-  document.getElementById('passageArea').innerHTML=`<h3>Listening Sections</h3><button onclick='playListening(0)'>Play Section 1</button><button onclick='playListening(1)'>Play Section 2</button><button onclick='playListening(2)'>Play Section 3</button><button onclick='playListening(3)'>Play Section 4</button>`;
-  document.getElementById('questionArea').innerHTML=Array.from({length:40},(_,i)=>`<div class='question'>${i+1}. <input id='l${i+1}'></div>`).join('');
+  document.getElementById('passageArea').innerHTML=`<h3>Listening Sections</h3>
+  <button onclick='playListening(0)'>Play Section 1</button>
+  <button onclick='playListening(1)'>Play Section 2</button>
+  <button onclick='playListening(2)'>Play Section 3</button>
+  <button onclick='playListening(3)'>Play Section 4</button>`;
+
+  const listeningQuestionsText = [
+    "1. When does the student plan to move in?","2. How much is the weekly rent?","3. What is included in the rent?","4. Which floor is the room on?","5. Minimum duration of stay?","6. What payment is needed before moving in?","7. How many people share the kitchen?","8. How far is the bus stop?","9. What is not allowed in the house?","10. Preferred contact method?",
+    "11. When did the Riverside Sports Centre open?","12. Who is it open for?","13. Where is the gym equipment from?","14. Which sports can you play there?","15. Who can use free parking?","16. When are yoga classes held?","17. What training is offered?","18. What food is served in the cafe?","19. Closing time of the centre?","20. Which office handles complaints?",
+    "21. What is the topic of the group project?","22. Who writes the introduction?","23. How will research be conducted?","24. How long is the presentation?","25. What is the main concern of the group?","26. When is the first draft due?","27. How many references are needed?","28. Where is the presentation held?","29. Supervisor's surname?","30. In what format is the final submission?",
+    "31. Sustainability protects future what?","32. Which century popularised sustainability?","33. What type of farming causes deforestation?","34. Urban areas produce which emissions?","35. Recycling reduces which waste?","36. Wind and which power are renewable?","37. Governments use what to encourage sustainability?","38. Behaviour change reduces what consumption?","39. Education raises what awareness?","40. Sustainability requires global what?"
+  ];
+
+  document.getElementById('questionArea').innerHTML = listeningQuestionsText.map((q,i)=>`<div class='question'><label>${q}</label><br><input id='l${i+1}'></div>`).join('');
 }
 
 // SUBMIT TEST & SAVE HISTORY
