@@ -255,12 +255,15 @@ function loadWriting(){
 <p>Write an essay of at least 250 words on the following topic:</p>
 <p><strong>Some people believe technology has improved education, while others think it has caused problems. Discuss both views and give your opinion.</strong></p>
   `;
+
   document.getElementById('rightPane').innerHTML=`
 <h4>Task 1 Answer</h4><textarea id="w1" rows="10" placeholder="Type your description..." style="width:95%"></textarea>
 <h4>Task 2 Answer</h4><textarea id="w2" rows="15" placeholder="Type your essay..." style="width:95%"></textarea>
-<br><button onclick="submitWriting()">Submit Writing</button>
+<br><button onclick="submitMockTest()">Submit Full Mock Test</button>
   `;
 }
+
+// ===== SUBMIT MOCK TEST SCORING =====
 function submitMockTest(){
 
   // ==== LISTENING SCORING ====
@@ -271,7 +274,6 @@ function submitMockTest(){
       if(user && user===q.answer.toLowerCase()) listeningScore++;
     });
   });
-
   let listeningBand=0;
   if(listeningScore>=40) listeningBand=9;
   else if(listeningScore>=37) listeningBand=8.5;
@@ -298,7 +300,6 @@ function submitMockTest(){
       if(user===q.answer.toLowerCase()) readingScore++;
     }
   });
-
   let readingBand=0;
   if(readingScore>=40) readingBand=9;
   else if(readingScore>=37) readingBand=8.5;
@@ -310,6 +311,7 @@ function submitMockTest(){
   else if(readingScore>=18) readingBand=5.5;
   else if(readingScore>=16) readingBand=5;
   else readingBand=4.5;
+  
 // ===== IMPROVED WRITING SCORING =====
 function submitWriting(){
   const task1=document.getElementById('w1').value.trim();
