@@ -11,7 +11,7 @@ header{background:#0a3d62;color:#fff;padding:15px;text-align:center}
 .question{margin-bottom:15px}
 .timer{font-weight:bold;color:#c0392b}
 button{padding:8px 12px;margin:5px 0}
-input{width:90%;padding:5px}
+input, select{width:90%;padding:5px;margin-top:5px}
 </style>
 </head>
 <body>
@@ -27,8 +27,8 @@ input{width:90%;padding:5px}
 <button onclick="submitTest()">Submit Test</button>
 <button onclick="showHistory()">View Result History</button>
 </footer><script>
-// TIMER
-let time = 3600; let timerInterval;
+// ===== TIMER =====
+let time=3600; let timerInterval;
 function startTimer(){
   clearInterval(timerInterval);
   timerInterval=setInterval(()=>{
@@ -38,64 +38,72 @@ function startTimer(){
   },1000);
 }
 
-// === READING SECTION ===
+// ===== READING SECTION =====
 const readingPassages=[
   {title:"Passage 1: Urban Farming", text:`Urban farming has become popular worldwide. Rooftop gardens and community plots reduce transportation costs. Supporters highlight mental health and community benefits, but critics mention limited space and high costs.`},
   {title:"Passage 2: Sleep and Health", text:`Sleep is critical for memory and recovery. Adults need 7-9 hours per night. Sleep deprivation affects focus, immunity, and long-term health. Screen usage can disrupt sleep patterns.`},
   {title:"Passage 3: The History of Paper", text:`Paper was invented in China over 2000 years ago. It spread globally and transformed education and record keeping. Digital media is dominant, but paper remains widely used for accessibility and affordability.`}
 ];
 
-const readingQuestionsText=[
-"1. Urban farming mainly reduces what type of emissions?","2. Urban farming improves mental health. TRUE/FALSE","3. Vertical farms are used in urban areas. TRUE/FALSE","4. Critics highlight space constraints. TRUE/FALSE","5. Initial costs are high. TRUE/FALSE","6. Which benefit does urban farming provide?","7. Where are rooftop gardens built?","8. How many passages are there?","9. Adults need how many hours of sleep?","10. Sleep deprivation affects which system?","11. Screen usage disrupts what?","12. Paper was invented in which country?","13. Paper is used because it is what?","14. Digital media is now what?","15. Paper transformed what aspect of society?","16. Sleep affects memory. TRUE/FALSE","17. Community plots reduce what?","18. Mental health benefits are TRUE/FALSE","19. Accessibility is why paper is still used. TRUE/FALSE","20. Paper invention was over how many years ago?","21. Sleep affects which risk?","22. Rooftop gardens help reduce what?","23. Paper is affordable. TRUE/FALSE","24. Sleep deprivation reduces what?","25. Urban farming affects which bonds?","26. How many passages are included?","27. Vertical farms provide what?","28. Paper invention impacted education. TRUE/FALSE","29. Sleep cycles are disrupted by what?","30. Community benefits are TRUE/FALSE","31. Sleep deprivation increases risk of what?","32. Where did paper spread next?","33. Rooftop gardens reduce what cost?","34. Paper is dominant or digital?","35. Mental health is improved by what?","36. Paper is reliable because of what?","37. Sleep affects which performance?","38. Initial costs are considered what?","39. Transportation costs are reduced. TRUE/FALSE","40. Digital media is dominant. TRUE/FALSE"
-];
-
-const readingAnswers=[
-"carbon","true","true","true","true","community","rooftops","3","7-9","immune","sleep cycles","china","affordable","dominant","education","true","transportation","true","true","2000","long-term illness","transportation","true","concentration","community","3","fresh produce","true","screen usage","true","chronic illness","islamic world","transportation","dominant","urban farming","accessibility","memory","high","transportation","dominant"
+const readingQuestions=[
+  {passage:0,type:"TFNG",question:"Urban farming reduces carbon emissions?",answer:"true"},
+  {passage:0,type:"TFNG",question:"Rooftop gardens are built in rural areas?",answer:"false"},
+  {passage:0,type:"MC",question:"Which is NOT a benefit of urban farming?",options:["Mental health","Community ties","Space constraints"],answer:"Space constraints"},
+  {passage:1,type:"SC",question:"Adults need ___ hours of sleep per night.",answer:"7-9"},
+  {passage:1,type:"TFNG",question:"Screen usage can disrupt sleep patterns?",answer:"true"},
+  {passage:2,type:"MC",question:"Where was paper invented?",options:["China","Egypt","Greece"],answer:"China"},
+  {passage:2,type:"SC",question:"Paper was invented over ___ years ago.",answer:"2000"}
 ];
 
 function loadReading(){
   time=3600; startTimer();
-  document.getElementById('passageArea').innerHTML=readingPassages.map(p=>`<h3>${p.title}</h3><p>${p.text}</p>`).join('');
-  document.getElementById('questionArea').innerHTML=readingQuestionsText.map((q,i)=>`<div class='question'><label>${q}</label><br><input type='text' id='r${i+1}'></div>`).join('');
+  let html='';
+  readingPassages.forEach((p,i)=>{html+=`<h3>${p.title}</h3><p>${p.text}</p>`;
+    readingQuestions.filter(q=>q.passage===i).forEach((q,j)=>{
+      if(q.type==='TFNG') html+=`<div class='question'><label>${j+1}. ${q.question}</label><br><select id='r${i}_${j}'><option value=''>Select</option><option value='true'>True</option><option value='false'>False</option><option value='ng'>Not Given</option></select></div>`;
+      else if(q.type==='MC') html+=`<div class='question'><label>${j+1}. ${q.question}</label><br><select id='r${i}_${j}'><option value=''>Select</option>${q.options.map(o=>`<option value='${o}'>${o}</option>`).join('')}</select></div>`;
+      else if(q.type==='SC') html+=`<div class='question'><label>${j+1}. ${q.question}</label><br><input type='text' id='r${i}_${j}'></div>`;
+    });
+  });
+  document.getElementById('passageArea').innerHTML=html;
+  document.getElementById('questionArea').innerHTML='<p>Select answers next to each question.</p>';
 }
 
-// === LISTENING SECTION ===
-const listeningScripts=[
-`Section 1: Student renting accommodation. Rent: 150 pounds/week, utilities included, second floor, minimum six months.`,
-`Section 2: Riverside Sports Centre opened in April, open to public, free parking, gym equipment imported.`,
-`Section 3: Students discuss group project on urban transport. Presentation lasts 15 min, Sarah writes intro.`,
-`Section 4: Lecture on sustainability, renewable energy: wind and solar, recycling reduces landfill, global cooperation required.`
+// ===== LISTENING SECTION =====
+const listeningSections=[
+  {audio:`The student plans to move in September. Rent: 150 pounds/week, utilities included, second floor, minimum six months.`,questions:[
+    {q:"When does the student plan to move in?",id:"l1"},{q:"How much is the weekly rent?",id:"l2"},{q:"What is included in the rent?",id:"l3"} ]},
+  {audio:`Riverside Sports Centre opened in April, open to public, free parking, gym equipment imported.`,questions:[
+    {q:"When did the Sports Centre open?",id:"l4"},{q:"Who can use the centre?",id:"l5"},{q:"Where is the gym equipment from?",id:"l6"} ]},
+  {audio:`Students discuss group project on urban transport. Presentation lasts 15 min, Sarah writes intro.`,questions:[
+    {q:"What is the topic of the group project?",id:"l7"},{q:"Who writes the introduction?",id:"l8"} ]},
+  {audio:`Lecture on sustainability, renewable energy: wind and solar, recycling reduces landfill, global cooperation required.`,questions:[
+    {q:"Sustainability protects what?",id:"l9"},{q:"Which energy types are renewable?",id:"l10"} ]}
 ];
 
-const listeningQuestionsText=[
-"1. When does the student plan to move in?","2. How much is the weekly rent?","3. What is included in the rent?","4. Which floor is the room on?","5. Minimum duration of stay?","6. What payment is needed before moving in?","7. How many people share the kitchen?","8. How far is the bus stop?","9. What is not allowed in the house?","10. Preferred contact method?",
-"11. When did the Sports Centre open?","12. Who can use the centre?","13. Where is the gym equipment from?","14. Which sports can be played?","15. Who can use free parking?","16. When are yoga classes held?","17. What training is offered?","18. What food is served in the cafe?","19. Closing time of the centre?","20. Which office handles complaints?",
-"21. What is the topic of the group project?","22. Who writes the introduction?","23. How will research be done?","24. How long is the presentation?","25. Main concern of the group?","26. When is the first draft due?","27. How many references are required?","28. Where is the presentation held?","29. Supervisor’s surname?","30. Final submission format?",
-"31. Sustainability protects what?","32. Which century popularised sustainability?","33. What type of farming causes deforestation?","34. Urban areas produce which emissions?","35. Recycling reduces which waste?","36. Wind and which power are renewable?","37. Governments use what to encourage sustainability?","38. Behaviour change reduces what consumption?","39. Education raises what awareness?","40. Sustainability requires global what?"
-];
-
-const listeningAnswers=[
-"september","150","utilities","second","six","deposit","two","five","pets","email","april","general public","germany","indoor football and badminton","everyone","weekday","personal","healthy","10","management","urban transport","sarah","online questionnaires","15","time management","friday","eight","lecture hall","harris","pdf","needs","twentieth","intensive","carbon","landfill","solar","incentives","energy","environmental","cooperation"
-];
-
-let played=[false,false,false,false];
+let currentListening=0; let played=[false,false,false,false];
 function playListening(i){
-  if(played[i]){alert('This section can only be played once');return;}
-  let u=new SpeechSynthesisUtterance(listeningScripts[i]); u.lang='en-GB'; u.rate=0.9;
+  if(played[i]){alert('Section already played'); return;}
+  let u=new SpeechSynthesisUtterance(listeningSections[i].audio); u.lang='en-GB'; u.rate=0.9;
   u.onend=()=>played[i]=true; speechSynthesis.speak(u);
 }
 
 function loadListening(){
   time=2400; startTimer();
-  document.getElementById('passageArea').innerHTML=`<h3>Listening Sections</h3>
-<button onclick='playListening(0)'>Play Section 1</button>
-<button onclick='playListening(1)'>Play Section 2</button>
-<button onclick='playListening(2)'>Play Section 3</button>
-<button onclick='playListening(3)'>Play Section 4</button>`;
-  document.getElementById('questionArea').innerHTML=listeningQuestionsText.map((q,i)=>`<div class='question'><label>${q}</label><br><input id='l${i+1}'></div>`).join('');
+  let html=`<h3>Listening Section ${currentListening+1}</h3>`;
+  html+=`<button onclick='playListening(${currentListening})'>▶ Play Audio</button>`;
+  listeningSections[currentListening].questions.forEach((q,j)=>{
+    html+=`<div class='question'><label>${j+1}. ${q.q}</label><br><input type='text' id='${q.id}'></div>`;
+  });
+  document.getElementById('passageArea').innerHTML=html;
+  document.getElementById('questionArea').innerHTML=`<button onclick='nextListening()'>Next Section</button>`;
 }
 
-// === SCORING & HISTORY ===
+function nextListening(){
+  if(currentListening<listeningSections.length-1){ currentListening++; loadListening(); } else { alert('This is the last section'); }
+}
+
+// ===== SCORING & HISTORY =====
 function band(score){if(score>=39)return 9;if(score>=37)return 8.5;if(score>=35)return 8;if(score>=32)return 7.5;if(score>=30)return 7;if(score>=26)return 6.5;if(score>=23)return 6;if(score>=18)return 5.5;if(score>=16)return 5;return 4.5;}
 function saveResult(r,l){
   const history=JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
@@ -107,16 +115,19 @@ function showHistory(){
   if(history.length===0){alert('No results yet'); return;}
   alert(history.map(h=>`${h.date}\nReading: ${h.reading}/40 Listening: ${h.listening}/40`).join('\n\n'));
 }
-
 function submitTest(){
   let r=0,l=0;
-  readingAnswers.forEach((a,i)=>{let u=document.getElementById('r'+(i+1))?.value.toLowerCase().trim();if(u===a.toLowerCase())r++;});
-  listeningAnswers.forEach((a,i)=>{let u=document.getElementById('l'+(i+1))?.value.toLowerCase().trim();if(u===a.toLowerCase())l++;});
+  readingQuestions.forEach((q,i)=>{
+    let val=document.getElementById(`r${q.passage}_${i}`)?.value.toLowerCase().trim(); if(val===q.answer.toLowerCase()) r++;
+  });
+  listeningSections.forEach(s=>s.questions.forEach(q=>{
+    let val=document.getElementById(q.id)?.value.toLowerCase().trim(); if(val===listeningAnswers[parseInt(q.id.slice(1))-1].toLowerCase()) l++;
+  }));
   saveResult(r,l);
   alert(`Reading: ${r}/40 Band ${band(r)}\nListening: ${l}/40 Band ${band(l)}`);
 }
 
-// Load default section
+// Load default
 loadReading();
 </script></body>
 </html>
