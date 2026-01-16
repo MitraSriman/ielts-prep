@@ -1,125 +1,103 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>IELTS Practice Website</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Computer Based Practice Test</title>
 <style>
-body {font-family: Arial, sans-serif; margin:0; background:#f4f6f8;}
-header {background:#1e88e5; color:white; padding:20px; text-align:center;}
-nav {background:#1565c0; display:flex; justify-content:center; gap:15px; padding:10px;}
-nav button {background:white; border:none; padding:10px 14px; border-radius:6px; cursor:pointer; font-weight:bold;}
-.container {max-width:1100px; margin:auto; padding:20px;}
-.card {background:white; padding:20px; border-radius:10px; margin-bottom:20px; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
-h2 {color:#1e88e5;}
-.question {margin:10px 0;}
-.timer {text-align:right; font-weight:bold; color:#d32f2f;}
-table {border-collapse: collapse; width: 100%;}
-th, td {border: 1px solid #999; padding: 8px; text-align: center;}
-input[type=text] {width:90px;}
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f5f7fa}
+header{background:#0a3d62;color:#fff;padding:15px;text-align:center}
+.container{display:flex;height:calc(100vh - 60px)}
+.left{width:60%;padding:20px;overflow-y:auto;background:#ffffff}
+.right{width:40%;padding:20px;overflow-y:auto;border-left:1px solid #ddd;background:#fafafa}
+.question{margin-bottom:15px}
+.timer{font-weight:bold;color:#c0392b}
+button{padding:8px 12px;margin:5px 0}
+.hidden{display:none}
 </style>
 </head>
 <body>
 <header>
-<h1>Free IELTS Practice Platform</h1>
-<p>Interactive Reading & Listening Mock Tests</p>
-</header>
-<nav>
-<button onclick="show('home')">Home</button>
-<button onclick="show('reading')">Reading Mock Test</button>
-<button onclick="show('listening')">Listening Mock Test</button>
-</nav>
-<div class="container">
-<div id="home" class="section">
-<div class="card">
-<h2>IELTS Band Score Table</h2>
-<table>
-<tr><th>Raw Score (out of 40)</th><th>Band</th></tr>
-<tr><td>39–40</td><td>9.0</td></tr>
-<tr><td>37–38</td><td>8.5</td></tr>
-<tr><td>35–36</td><td>8.0</td></tr>
-<tr><td>33–34</td><td>7.5</td></tr>
-<tr><td>30–32</td><td>7.0</td></tr>
-<tr><td>27–29</td><td>6.5</td></tr>
-<tr><td>23–26</td><td>6.0</td></tr>
-<tr><td>19–22</td><td>5.5</td></tr>
-<tr><td>15–18</td><td>5.0</td></tr>
-<tr><td>13–14</td><td>4.5</td></tr>
-</table>
-</div>
-</div>
-<div id="reading" class="section" style="display:none;">
-<div class="timer" id="readingTimer">Time left: 60:00</div>
-<div class="card">
-<h2>Reading Passage 1</h2>
-<p>Public libraries have evolved to provide digital resources, workshops, and learning spaces for communities.</p>
-<h3>Questions 1–10 (True / False / Not Given)</h3>
-<div class="question">1. Libraries only lend books. <input type="radio" name="q1" value="F"> True <input type="radio" name="q1" value="T"> False <input type="radio" name="q1" value="NG"> Not Given</div>
-<div class="question">2. Libraries offer community programs. <input type="radio" name="q2" value="T"> True <input type="radio" name="q2" value="F"> False <input type="radio" name="q2" value="NG"> Not Given</div>
-<div class="question">3. Libraries provide access to computers. <input type="radio" name="q3" value="T"> True <input type="radio" name="q3" value="F"> False <input type="radio" name="q3" value="NG"> Not Given</div>
-<div class="question">4. All libraries are privately funded. <input type="radio" name="q4" value="F"> True <input type="radio" name="q4" value="T"> False <input type="radio" name="q4" value="NG"> Not Given</div>
-<div class="question">5. Libraries are important community hubs. <input type="radio" name="q5" value="T"> True <input type="radio" name="q5" value="F"> False <input type="radio" name="q5" value="NG"> Not Given</div>
-<div class="question">6–10. (Safe practice T/F/NG questions)</div>
-</div>
-<div class="card">
-<h2>Reading Passage 2</h2>
-<p>Renewable energy such as wind and solar power has expanded rapidly due to environmental awareness and government incentives.</p>
-<h3>Questions 11–25 (Multiple Choice / Matching)</h3>
-<div class="question">11–25. (Safe practice MCQs and matching)</div>
-</div>
-<div class="card">
-<h2>Reading Passage 3</h2>
-<p>Intrinsic motivation, like personal satisfaction and purpose, often leads to long-term engagement and creativity.</p>
-<h3>Questions 26–40 (Sentence / Summary Completion)</h3>
-<div class="question">26–40. (Safe practice sentence completion)</div>
-<button onclick="scoreReading()">Submit Reading Test</button><p id="readingScore"></p>
-</div>
-<div id="listening" class="section" style="display:none;">
-<div class="timer" id="listeningTimer">Time left: 40:00</div>
-<div class="card">
-<h2>Listening Section 1 – Form Completion</h2>
-<p>Listen to the conversation and fill the form with correct answers (safe practice dialogue).</p>
-<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
-<div class="question">1–10. Form completion answers: <input type="text" name="l1"></div>
-</div>
-<div class="card">
-<h2>Listening Section 2 – Multiple Choice</h2>
-<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg"></audio>
-<div class="question">11–20. Choose correct answer: <input type="radio" name="l2" value="A"> A <input type="radio" name="l2" value="B"> B <input type="radio" name="l2" value="C"> C</div>
-</div>
-<div class="card">
-<h2>Listening Section 3 – Matching</h2>
-<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg"></audio>
-<div class="question">21–30. Match speakers to statements: <input type="text" name="l3"></div>
-</div>
-<div class="card">
-<h2>Listening Section 4 – Sentence Completion</h2>
-<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg"></audio>
-<div class="question">31–40. Complete sentences: <input type="text" name="l4"></div>
-<button onclick="scoreListening()">Submit Listening Test</button><p id="listeningScore"></p>
-</div>
-</div>
-<script>
-function show(id){document.querySelectorAll('.section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';}
-let readingTime=3600; let readingTimer=document.getElementById('readingTimer');
-setInterval(()=>{if(document.getElementById('reading').style.display!=='none'){readingTime--; let m=Math.floor(readingTime/60); let s=readingTime%60; readingTimer.textContent=`Time left: ${m}:${s.toString().padStart(2,'0')}`; if(readingTime<=0)alert('Reading time is up!');}},1000);
-let listeningTime=2400; let listeningTimer=document.getElementById('listeningTimer');
-setInterval(()=>{if(document.getElementById('listening').style.display!=='none'){listeningTime--; let m=Math.floor(listeningTime/60); let s=listeningTime%60; listeningTimer.textContent=`Time left: ${m}:${s.toString().padStart(2,'0')}`; if(listeningTime<=0)alert('Listening time is up!');}},1000);
-// Correct answers (safe examples)
-const readingAnswers = {
-q1:'F',q2:'T',q3:'T',q4:'F',q5:'T',q6:'NG',q7:'T',q8:'F',q9:'T',q10:'NG',
-q11:'A',q12:'B',q13:'C',q14:'A',q15:'B',q16:'C',q17:'A',q18:'B',q19:'C',q20:'A',
-q21:'B',q22:'C',q23:'A',q24:'B',q25:'C',q26:'word1',q27:'word2',q28:'word3',q29:'word4',
-q30:'word5',q31:'word6',q32:'word7',q33:'word8',q34:'word9',q35:'word10',q36:'word11',
-q37:'word12',q38:'word13',q39:'word14',q40:'word15'};
-const listeningAnswers = {
-l1:'text1',l2:'A',l3:'B',l4:'C',l5:'text2',l6:'A',l7:'B',l8:'C',l9:'text3',l10:'text4',
-l11:'B',l12:'C',l13:'A',l14:'B',l15:'C',l16:'A',l17:'B',l18:'C',l19:'A',l20:'B',
-l21:'text5',l22:'text6',l23:'text7',l24:'text8',l25:'text9',l26:'text10',l27:'text11',
-l28:'text12',l29:'text13',l30:'text14',l31:'word1',l32:'word2',l33:'word3',l34:'word4',
-l35:'word5',l36:'word6',l37:'word7',l38:'word8',l39:'word9',l40:'word10'};
-function scoreReading(){let score=0;for(let q in readingAnswers){const inputs=document.getElementsByName(q);inputs.forEach(i=>{if(i.checked && i.value===readingAnswers[q])score++;});}document.getElementById('readingScore').textContent=`Reading Score: ${score}/40 (Band: ${band(score,40)})`;}
-function scoreListening(){let score=0;for(let q in listeningAnswers){const inputs=document.getElementsByName(q);inputs.forEach(i=>{if((i.checked && i.value===listeningAnswers[q]) || (i.value===listeningAnswers[q] && i.type==='text'))score++;});}document.getElementById('listeningScore').textContent=`Listening Score: ${score}/40 (Band: ${band(score,40)})`;}
-function band(score,total){const raw=Math.round((score/total)*40);if(raw>=39)return'9.0';if(raw>=37)return'8.5';if(raw>=35)return'8.0';if(raw>=33)return'7.5';if(raw>=30)return'7.0';if(raw>=27)return'6.5';if(raw>=23)return'6.0';if(raw>=19)return'5.5';if(raw>=15)return'5.0';if(raw>=13)return'4.5';return'4.0 or below';}
-</script>
+<h2>IELTS Academic – Computer Based Practice Test</h2>
+<p class="timer" id="timer">Time: 60:00</p>
+</header><div class="container">
+<div class="left" id="passageArea"></div>
+<div class="right" id="questionArea"></div>
+</div><script>
+/**************** TIMER ****************/
+let time = 3600; // reading default
+let timerInterval = setInterval(()=>{
+  let m = Math.floor(time/60);
+  let s = time%60;
+  document.getElementById('timer').innerText = `Time: ${m}:${s<10?'0':''}${s}`;
+  if(time>0) time--;
+},1000);
+
+/**************** READING CONTENT ****************/
+const readingPassages = [
+{
+ title:"Passage 1: The Rise of Urban Farming",
+ text:`Urban farming has become increasingly popular in cities worldwide. As urban populations grow, access to fresh produce has become a challenge. Rooftop gardens, vertical farms, and community plots provide local food while reducing transportation costs and carbon emissions. Researchers argue that urban farming also strengthens community ties and improves mental health. However, critics point out limitations such as space constraints and high initial costs.`
+},
+{
+ title:"Passage 2: Sleep and Human Performance",
+ text:`Sleep plays a critical role in memory formation and physical recovery. Studies show that adults require between seven and nine hours of sleep per night. Chronic sleep deprivation has been linked to reduced concentration, weakened immunity, and increased risk of long-term illness. Despite this, modern lifestyles and excessive screen use continue to disrupt natural sleep cycles.`
+},
+{
+ title:"Passage 3: The History of Paper",
+ text:`Paper was invented in China over two thousand years ago and later spread to the Islamic world and Europe. The invention revolutionised record keeping and education. Although digital media is now dominant, paper remains widely used due to its low cost, reliability, and accessibility in regions with limited technology.`
+}
+];
+
+const readingQuestions = Array.from({length:40},(_,i)=>`Reading Question ${i+1}`);
+
+function loadReading(){
+  document.getElementById('passageArea').innerHTML = readingPassages.map(p=>`<h3>${p.title}</h3><p>${p.text}</p>`).join('');
+  document.getElementById('questionArea').innerHTML = readingQuestions.map((q,i)=>`
+    <div class='question'>
+      <label>${i+1}. ${q}</label><br>
+      <input type='text' id='r${i+1}'>
+    </div>`).join('');
+}
+
+/**************** LISTENING AUDIO (REAL TTS) ****************/
+const listeningScripts = [
+`You are listening to a conversation about renting accommodation. The rent is one hundred and fifty pounds per week. Utilities are included. The room is on the second floor. The minimum stay is six months.`,
+`Welcome to the Riverside Sports Centre. The centre opened in April and offers facilities for the general public. Free parking is available for everyone.`,
+`The students are discussing a group project on urban transport. The presentation lasts fifteen minutes and the deadline is Friday.`,
+`Today's lecture discusses sustainability and environmental responsibility. Renewable energy includes wind and solar power.`
+];
+
+let played = [false,false,false,false];
+
+function playListening(section){
+  if(played[section]){alert('This section can only be played once.');return;}
+  let u = new SpeechSynthesisUtterance(listeningScripts[section]);
+  u.lang='en-GB';u.rate=0.9;
+  u.onend=()=>played[section]=true;
+  speechSynthesis.speak(u);
+}
+
+function loadListening(){
+  time = 2400; // 40 min
+  document.getElementById('timer').innerText='Time: 40:00';
+  document.getElementById('passageArea').innerHTML = `
+  <h3>Listening Sections</h3>
+  <button onclick='playListening(0)'>Play Section 1</button>
+  <button onclick='playListening(1)'>Play Section 2</button>
+  <button onclick='playListening(2)'>Play Section 3</button>
+  <button onclick='playListening(3)'>Play Section 4</button>`;
+
+  document.getElementById('questionArea').innerHTML = Array.from({length:40},(_,i)=>`
+    <div class='question'>
+      <label>${i+1}. Listening Question ${i+1}</label><br>
+      <input type='text' id='l${i+1}'>
+    </div>`).join('');
+}
+
+/**************** LOAD DEFAULT ****************/
+loadReading();
+</script><footer style="text-align:center;padding:10px">
+<button onclick="loadReading()">Reading Test</button>
+<button onclick="loadListening()">Listening Test</button>
+</footer>
 </body>
 </html>
