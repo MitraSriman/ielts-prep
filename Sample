@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IELTS CBT Home</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f5f7fa}
+header{background:#0a3d62;color:#fff;padding:15px;text-align:center}
+nav{background:#1e3799;padding:10px;text-align:center}
+nav button{padding:10px 20px;margin:5px;background:#fff;border:none;border-radius:5px;cursor:pointer}
+nav button:hover{background:#f1f1f1}
+.container{display:flex;height:calc(100vh - 110px)}
+.left{width:60%;padding:20px;overflow-y:auto;background:#ffffff}
+.right{width:40%;padding:20px;overflow-y:auto;border-left:1px solid #ddd;background:#fafafa}
+button{padding:8px 12px;margin:5px 0}
+h3{margin-top:0}
+.timer{font-weight:bold;color:#c0392b}
+.map-img{width:100%;margin:10px 0;border:1px solid #ccc;position:relative;height:300px}
+.map-label{position:absolute;background:rgba(255,255,255,0.9);padding:2px 5px;border:1px solid #333;border-radius:3px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<header>
+<h2>IELTS Academic – CBT Practice</h2>
+<p class="timer" id="timer"></p>
+</header>
+
+<nav>
+<button onclick="showHome()">Home</button>
+<button onclick="showMockTests()">Mock Tests</button>
+</nav>
+
+<div class="container">
+<div class="left" id="leftPane"></div>
+<div class="right" id="rightPane"></div>
+</div>
+
+<script>
+// ===== HOME PAGE =====
+function showHome(){
+  clearTimer();
+  document.getElementById('timer').innerText='';
+  document.getElementById('leftPane').innerHTML=`
+    <h3>IELTS Reading Tips</h3>
+    <ul>
+      <li>Skim the passage first to get the main idea.</li>
+      <li>Underline keywords in the questions.</li>
+      <li>Manage your time carefully; ~20 min per passage.</li>
+    </ul>
+    <h3>IELTS Listening Tips</h3>
+    <ul>
+      <li>Read questions before listening.</li>
+      <li>Focus on keywords and numbers.</li>
+      <li>Don’t get stuck; keep listening.</li>
+    </ul>
+  `;
+  document.getElementById('rightPane').innerHTML='';
+}
+
+// ===== MOCK TESTS PAGE =====
+function showMockTests(){
+  clearTimer();
+  document.getElementById('timer').innerText='';
+  document.getElementById('leftPane').innerHTML=`
+    <h3>Available Mock Tests</h3>
+    <button onclick="startMockTest(1)">Mock Test 1</button>
+    <button onclick="comingSoon()">Mock Test 2</button>
+    <button onclick="comingSoon()">Mock Test 3</button>
+    <button onclick="comingSoon()">Mock Test 4</button>
+  `;
+  document.getElementById('rightPane').innerHTML='';
+}
+
+function comingSoon(){alert('Coming Soon');}
+
+// ===== MOCK TEST 1 =====
+// Variables for section
+let time = 0; let timerInterval;
+
+// Reset timer
+function clearTimer(){clearInterval(timerInterval);}
+
+// Example placeholders for Listening and Reading; you will paste your full CBT code here
+function startMockTest(id){
+  if(id===1){
+    loadListeningTest1();
+  }
+}
+
+// ===== LOAD LISTENING (part of Mock Test 1) =====
+function loadListeningTest1(){
+  time=2400;
+  startTimerMock();
+  document.getElementById('timer').innerText='Time: 40:00';
+  document.getElementById('leftPane').innerHTML=`
+    <h3>Listening Section</h3>
+    <p>Audio/Instructions here</p>
+    <button onclick="playAudio()">▶ Play Audio</button>
+  `;
+  document.getElementById('rightPane').innerHTML=`
+    <div class='question'>
+      <label>1. Example question?</label><br>
+      <input type='text' id='l1'>
+    </div>
+    <div class='question'>
+      <label>2. Example question?</label><br>
+      <input type='text' id='l2'>
+    </div>
+    <button onclick="loadReadingTest1()">Next: Reading Section</button>
+  `;
+}
+
+function playAudio(){
+  let audio = new SpeechSynthesisUtterance("This is example audio for listening section.");
+  audio.lang='en-GB';
+  speechSynthesis.speak(audio);
+}
+
+// ===== LOAD READING (part of Mock Test 1) =====
+function loadReadingTest1(){
+  time=3600;
+  startTimerMock();
+  document.getElementById('timer').innerText='Time: 60:00';
+  document.getElementById('leftPane').innerHTML=`
+    <h3>Reading Section</h3>
+    <p>Passages appear here on left</p>
+  `;
+  document.getElementById('rightPane').innerHTML=`
+    <div class='question'>
+      <label>1. Example reading question?</label><br>
+      <input type='text' id='r1'>
+    </div>
+    <div class='question'>
+      <label>2. Example reading question?</label><br>
+      <input type='text' id='r2'>
+    </div>
+    <button onclick="alert('Test Submitted')">Submit Test</button>
+  `;
+}
+
+// ===== TIMER FUNCTION =====
+function startTimerMock(){
+  clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    let m=Math.floor(time/60), s=time%60;
+    document.getElementById('timer').innerText=`Time: ${m}:${s<10?'0':''}${s}`;
+    if(time>0) time--;
+  },1000);
+}
+
+// ===== INITIAL LOAD =====
+showHome();
+</script>
+
+</body>
+</html>
