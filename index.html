@@ -102,32 +102,32 @@ const readingQuestions=[
 
 // ===== LISTENING =====
 const listeningSections=[
-{part:"Part 1", audio:"You are booking a room. Rent 150 pounds/week. Utilities included. Minimum stay 6 months.", mapImage:null,
+{part:"Part 1", audio:"You are booking a room. Rent 150 pounds per week. Utilities included. Minimum stay 6 months. Contact via email. Second floor.", 
  questions:[
- {id:"l1",q:"What is the weekly rent?",answer:"150"},
+ {id:"l1",q:"Weekly rent?",answer:"150"},
  {id:"l2",q:"Is utilities included?",answer:"yes"},
- {id:"l3",q:"Minimum stay in months?",answer:"6"},
- {id:"l4",q:"Preferred contact method?",answer:"email"},
- {id:"l5",q:"Floor of room?",answer:"second"},
+ {id:"l3",q:"Minimum stay?",answer:"6"},
+ {id:"l4",q:"Contact method?",answer:"email"},
+ {id:"l5",q:"Floor?",answer:"second"},
  {id:"l6",q:"Deposit required?",answer:"yes"},
- {id:"l7",q:"Number of people sharing kitchen?",answer:"2"},
+ {id:"l7",q:"People sharing kitchen?",answer:"2"},
  {id:"l8",q:"Minutes to bus stop?",answer:"5"},
  {id:"l9",q:"Pets allowed?",answer:"no"},
  {id:"l10",q:"Move-in month?",answer:"september"}]},
-{part:"Part 2", audio:"Welcome to the Riverside Sports Centre. Opened April. Free parking. Yoga classes weekdays.", mapImage:null,
+{part:"Part 2", audio:"Dialogue about Riverside Sports Centre. Facilities, opening times, membership, classes, parking.", 
  questions:[
- {id:"l11",q:"Month centre opened?",answer:"april"},
- {id:"l12",q:"Who can use swimming pool?",answer:"general public"},
- {id:"l13",q:"Free parking available to?",answer:"everyone"},
- {id:"l14",q:"Day yoga classes?",answer:"weekday"},
- {id:"l15",q:"Facilities available?",answer:"gym, pool"},
- {id:"l16",q:"Cafe serves what?",answer:"healthy"},
- {id:"l17",q:"Training included?",answer:"personal"},
- {id:"l18",q:"Closing time?",answer:"10"},
- {id:"l19",q:"Office handling complaints?",answer:"management"},
- {id:"l20",q:"Presentation hall?",answer:"lecture hall"}]},
-{part:"Part 3", audio:"Students discussing library layout. Reading rooms left, computer stations right, group tables center, staff office back, lounge entrance.", 
- mapImage:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAQAAACEN3bzAAAADklEQVR4AWP4//8/AwAI/AL+Bkdn/wAAAABJRU5ErkJggg==",
+ {id:"l11",q:"Month of opening?",answer:"april"},
+ {id:"l12",q:"Who is the pool designed for?",answer:"general public"},
+ {id:"l13",q:"Where is gym equipment from?",answer:"germany"},
+ {id:"l14",q:"Which sports are played in hall?",answer:"indoor football and badminton"},
+ {id:"l15",q:"Who can use free parking?",answer:"everyone"},
+ {id:"l16",q:"When are yoga classes?",answer:"weekday"},
+ {id:"l17",q:"Type of training?",answer:"personal"},
+ {id:"l18",q:"Cafe serves?",answer:"healthy"},
+ {id:"l19",q:"Closing time?",answer:"10"},
+ {id:"l20",q:"Office handling complaints?",answer:"management"}]},
+{part:"Part 3", audio:"Students discuss library layout. Reading rooms left, computer stations right, group tables center, staff office back, lounge entrance.", 
+ mapImage:"https://i.imgur.com/LIBRARYMAP.png",
  questions:[
  {id:"l21",q:"Where are the reading rooms located?",answer:"left"},
  {id:"l22",q:"Where are the computer stations?",answer:"right"},
@@ -139,73 +139,60 @@ const listeningSections=[
  {id:"l28",q:"Which room is at the back?",answer:"staff office"},
  {id:"l29",q:"Floor of library?",answer:"1"},
  {id:"l30",q:"Section opposite computer stations?",answer:"reading rooms"}]},
-{part:"Part 4", audio:"Lecture about sustainability, renewable energy, and environmental responsibility.", mapImage:null,
+{part:"Part 4", audio:"Lecture on sustainability and renewable energy. Wind and solar power, recycling, government incentives.", 
  questions:[
- {id:"l31",q:"Which energies are renewable?",answer:"wind and solar"},
- {id:"l32",q:"Sustainability protects future what?",answer:"resources"},
+ {id:"l31",q:"Sustainability protects future what?",answer:"needs"},
+ {id:"l32",q:"Which century popularised sustainability?",answer:"twentieth"},
  {id:"l33",q:"What type of farming causes deforestation?",answer:"intensive"},
  {id:"l34",q:"Urban areas produce which emissions?",answer:"carbon"},
  {id:"l35",q:"Recycling reduces which waste?",answer:"landfill"},
- {id:"l36",q:"Government incentives encourage what?",answer:"sustainability"},
- {id:"l37",q:"Behaviour change reduces what?",answer:"energy consumption"},
- {id:"l38",q:"Education raises what awareness?",answer:"environmental"},
- {id:"l39",q:"Lecture duration?",answer:"45"},
- {id:"l40",q:"Main challenge discussed?",answer:"climate change"}]}
+ {id:"l36",q:"Wind and which power are renewable?",answer:"solar"},
+ {id:"l37",q:"Governments use what to encourage sustainability?",answer:"incentives"},
+ {id:"l38",q:"Behaviour change reduces what consumption?",answer:"energy"},
+ {id:"l39",q:"Education raises what awareness?",answer:"environmental"},
+ {id:"l40",q:"Sustainability requires global what?",answer:"cooperation"}]}
 ];
 
-let currentReading=0; let currentListening=0; let played=[false,false,false,false];
-
-function loadReading(){
-  time=3600; startTimer();
-  let p=readingPassages[currentReading];
-  let html=`<h3>${p.title}</h3><p>${p.text}</p>`;
-  readingQuestions.filter(q=>q.passage===currentReading).forEach((q,j)=>{
-    if(q.type==='TFNG') html+=`<div class='question'><label>${j+1}. ${q.question}</label><br><select id='r${currentReading}_${j}'><option value=''>Select</option><option value='true'>True</option><option value='false'>False</option><option value='ng'>Not Given</option></select></div>`;
-    else if(q.type==='MC') html+=`<div class='question'><label>${j+1}. ${q.question}</label><br><select id='r${currentReading}_${j}'><option value=''>Select</option>${q.options.map(o=>`<option value='${o}'>${o}</option>`).join('')}</select></div>`;
-    else if(q.type==='SC') html+=`<div class='question'><label>${j+1}. ${q.question}</label><br><input type='text' id='r${currentReading}_${j}'></div>`;
-  });
-  document.getElementById('passageArea').innerHTML=html;
-  document.getElementById('questionArea').innerHTML=`<button onclick='prevReading()'>Previous Passage</button> <button onclick='nextReading()'>Next Passage</button>`;
-}
-
-function nextReading(){if(currentReading<readingPassages.length-1){currentReading++;loadReading();}}
-function prevReading(){if(currentReading>0){currentReading--;loadReading();}}
-
-function playListening(i){if(played[i]){alert('Already played');return;} let u=new SpeechSynthesisUtterance(listeningSections[i].audio);u.lang='en-GB';u.rate=0.9; u.onend=()=>played[i]=true; speechSynthesis.speak(u);}
+let currentListening=0; let played=[false,false,false,false];
+function playListening(i){if(played[i]){alert('Already played'); return;} let u=new SpeechSynthesisUtterance(listeningSections[i].audio); u.lang='en-GB'; u.rate=0.9; u.onend=()=>played[i]=true; speechSynthesis.speak(u);}
 function loadListening(){
-  time=2400; startTimer();
   let s=listeningSections[currentListening];
   let html=`<h3>${s.part}</h3><button onclick='playListening(${currentListening})'>▶ Play Audio</button>`;
-  if(s.mapImage) html+=`<div class='map-container'><img src='${s.mapImage}' class='map-img'></div>`;
+  if(currentListening===2 && s.mapImage){
+    html+=`<div class='map-img'><img src='${s.mapImage}' style='width:100%;height:100%'>`;
+    const labels=[
+      {text:'Reading Rooms',top:'50px',left:'30px',qid:'l21',val:'left'},
+      {text:'Computer Stations',top:'50px',left:'200px',qid:'l22',val:'right'},
+      {text:'Group Tables',top:'150px',left:'120px',qid:'l23',val:'center'},
+      {text:'Staff Office',top:'250px',left:'200px',qid:'l24',val:'back'},
+      {text:'Lounge',top:'250px',left:'30px',qid:'l25',val:'entrance'}
+    ];
+    labels.forEach(l=>{html+=`<div class='map-label' style='top:${l.top};left:${l.left}' onclick="document.getElementById('${l.qid}').value='${l.val}'">${l.text}</div>`;});
+    html+="</div>";
+  }
   s.questions.forEach((q,j)=>{html+=`<div class='question'><label>${j+1}. ${q.q}</label><br><input type='text' id='${q.id}'></div>`;});
   document.getElementById('passageArea').innerHTML=html;
-  document.getElementById('questionArea').innerHTML=`<button onclick='prevListening()'>Previous Section</button> <button onclick='nextListening()'>Next Section</button>`;
+  document.getElementById('questionArea').innerHTML="";
 }
 function nextListening(){if(currentListening<listeningSections.length-1){currentListening++; loadListening();}}
 function prevListening(){if(currentListening>0){currentListening--; loadListening();}}
 
-function band(score){if(score>=39)return 9;if(score>=37)return 8.5;if(score>=35)return 8;if(score>=32)return 7.5;if(score>=30)return 7;if(score>=26)return 6.5;if(score>=23)return 6;if(score>=18)return 5.5;if(score>=16)return 5;return 4.5;}
-
+// ===== SUBMIT & HISTORY =====
 function submitTest(){
   let rscore=0; readingQuestions.forEach((q,i)=>{let val=document.getElementById(`r${q.passage}_${i}`)?.value.toLowerCase().trim(); if(val && val==q.answer.toLowerCase()) rscore++;});
   let lscore=0; listeningSections.forEach(s=>{s.questions.forEach(q=>{let val=document.getElementById(q.id)?.value.toLowerCase().trim(); if(val && val==q.answer.toLowerCase()) lscore++;});});
-  saveResult(rscore,lscore);
-  alert(`Reading: ${rscore}/40 | Listening: ${lscore}/40\nEstimated Band (Listening): ${band(lscore)}`);
-}
-
-function saveResult(r,l){
   const history=JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
-  history.push({date:new Date().toLocaleString(),reading:r,listening:l});
+  history.push({date:new Date().toLocaleString(),reading:rscore,listening:lscore});
   localStorage.setItem('ieltsHistory',JSON.stringify(history));
+  alert(`Reading: ${rscore}/40 | Listening: ${lscore}/40`);
 }
-
 function showHistory(){
   const history=JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
   if(history.length===0){alert('No results yet'); return;}
   alert(history.map(h=>`${h.date}\nReading: ${h.reading}/40 Listening: ${h.listening}/40`).join('\n\n'));
 }
 
-// ===== DEFAULT LOAD =====
+// INITIAL LOAD
 loadReading();
 </script>
 </body>
