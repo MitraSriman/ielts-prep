@@ -1,98 +1,126 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free IELTS Preparation Platform</title>
+  <meta charset="UTF-8">
+  <title>Free IELTS Preparation Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f4f6f8; }
-    header { background: #1e88e5; color: white; padding: 20px; text-align: center; }
-    nav { display: flex; justify-content: center; gap: 20px; background: #1565c0; padding: 10px; }
-    nav button { background: white; border: none; padding: 10px 16px; cursor: pointer; border-radius: 6px; font-weight: bold; }
-    .container { padding: 20px; max-width: 1000px; margin: auto; }
-    .card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    h2 { color: #1e88e5; }
-    button.primary { background: #1e88e5; color: white; border: none; padding: 10px 14px; border-radius: 6px; cursor: pointer; }
-    .question { margin: 10px 0; }
+    body { font-family: Arial, sans-serif; margin:0; background:#f4f6f8; }
+    header { background:#1e88e5; color:white; padding:20px; text-align:center; }
+    nav { background:#1565c0; display:flex; justify-content:center; gap:15px; padding:10px; }
+    nav button { background:white; border:none; padding:10px 14px; border-radius:6px; cursor:pointer; font-weight:bold; }
+    .container { max-width:1100px; margin:auto; padding:20px; }
+    .card { background:white; padding:20px; border-radius:10px; margin-bottom:20px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    h2 { color:#1e88e5; }
+    .question { margin:10px 0; }
+    .timer { text-align:right; font-weight:bold; color:#d32f2f; }
   </style>
 </head>
 <body><header>
-  <h1>IELTS Free Learning & Mock Test</h1>
-  <p>Computer-Based Practice | Real Exam Style</p>
+  <h1>Free IELTS Preparation Platform</h1>
+  <p>Learning Modules & Real Computer‑Based Mock Tests</p>
 </header><nav>
-  <button onclick="showSection('modules')">Learning Modules</button>
-  <button onclick="showSection('mock')">Mock Tests</button>
-</nav><div class="container">  <div id="modules" class="section">
+  <button onclick="show('home')">Home</button>
+  <button onclick="show('reading')">Reading Mock Test</button>
+  <button onclick="alert('Listening coming soon')">Listening</button>
+  <button onclick="alert('Writing coming soon')">Writing</button>
+  <button onclick="alert('Speaking coming soon')">Speaking</button>
+</nav><div class="container">  <!-- HOME -->  <div id="home" class="section">
     <div class="card">
       <h2>IELTS Learning Modules</h2>
-      <ul id="moduleList"></ul>
+      <ul>
+        <li>📘 Reading – Skimming, Scanning, T/F/NG</li>
+        <li>🎧 Listening – Section 1–4 Practice</li>
+        <li>✍️ Writing – Task 1 & Task 2</li>
+        <li>🗣 Speaking – Part 1, 2, 3</li>
+        <li>📚 Grammar & Vocabulary for IELTS</li>
+      </ul>
+      <p>Use the navigation above to start a mock test.</p>
     </div>
-  </div>  <div id="mock" class="section" style="display:none;">
-    <div class="card">
-      <h2>Computer-Based Mock Test</h2>
-      <p id="question"></p>
-      <div id="options"></div>
-      <button class="primary" onclick="nextQuestion()">Next</button>
-      <p id="score"></p>
-    </div>
+  </div>  <!-- READING MODULE -->  <div id="reading" class="section" style="display:none;"><div class="timer" id="timer">Time left: 60:00</div>
+
+<div class="card">
+  <h2>IELTS Academic Reading – Passage 1</h2>
+  <p>
+    Public libraries have evolved significantly over recent decades. No longer limited to lending books, they now provide digital access, community programs, and learning spaces. This transformation reflects changes in how information is consumed and the growing need for public access to technology.
+    <br><br>
+    Despite these developments, many libraries face funding challenges. Governments increasingly demand measurable social impact, pushing libraries to justify their role beyond traditional cultural functions.
+  </p>
+
+  <h3>Questions 1–5 (True / False / Not Given)</h3>
+
+  <div class="question">1. Libraries only focus on lending books today.<br>
+    <input type="radio" name="q1"> True
+    <input type="radio" name="q1"> False
+    <input type="radio" name="q1"> Not Given
+  </div>
+
+  <div class="question">2. Libraries provide access to technology.<br>
+    <input type="radio" name="q2"> True
+    <input type="radio" name="q2"> False
+    <input type="radio" name="q2"> Not Given
+  </div>
+
+  <div class="question">3. Library funding has increased globally.<br>
+    <input type="radio" name="q3"> True
+    <input type="radio" name="q3"> False
+    <input type="radio" name="q3"> Not Given
+  </div>
+
+  <div class="question">4. Libraries must show social value.<br>
+    <input type="radio" name="q4"> True
+    <input type="radio" name="q4"> False
+    <input type="radio" name="q4"> Not Given
+  </div>
+
+  <div class="question">5. Digital access reduced the role of libraries.<br>
+    <input type="radio" name="q5"> True
+    <input type="radio" name="q5"> False
+    <input type="radio" name="q5"> Not Given
+  </div>
+</div>
+
+<div class="card">
+  <h2>Reading Passage 2</h2>
+  <p>
+    Renewable energy sources such as wind and solar power have grown rapidly. Advances in technology and environmental awareness have made these alternatives increasingly competitive with fossil fuels.
+  </p>
+
+  <h3>Questions 6–7 (Multiple Choice)</h3>
+
+  <div class="question">6. Renewable energy expanded mainly because of:<br>
+    <input type="radio" name="q6"> A. Technological advances<br>
+    <input type="radio" name="q6"> B. Lower population<br>
+    <input type="radio" name="q6"> C. Reduced energy use<br>
+    <input type="radio" name="q6"> D. Media pressure
+  </div>
+
+  <div class="question">7. Renewable energy is now:<br>
+    <input type="radio" name="q7"> A. Obsolete<br>
+    <input type="radio" name="q7"> B. Illegal
+    <input type="radio" name="q7"> C. Competitive
+    <input type="radio" name="q7"> D. Unreliable
+  </div>
+</div>
+
+<button onclick="alert('Full scoring & 40 questions can be added next')">Submit Reading Test</button>
+
   </div></div><script>
-  const modules = [
-    'Listening: Note Completion & MCQ',
-    'Reading: Skimming, Scanning & True/False/Not Given',
-    'Writing Task 1: Graphs, Maps & Processes',
-    'Writing Task 2: Opinion & Discussion Essays',
-    'Speaking: Cue Card, Fluency & Pronunciation',
-    'Grammar for IELTS: Tense, Voice & Sentence Variety',
-    'Vocabulary: Collocations & Paraphrasing'
-  ];
-
-  const moduleList = document.getElementById('moduleList');
-  modules.forEach(m => {
-    const li = document.createElement('li');
-    li.textContent = m;
-    moduleList.appendChild(li);
-  });
-
-  const questions = [
-    { q: 'What is the main purpose of the IELTS exam?', o: ['Test math skills', 'Test English proficiency', 'Test IQ', 'Test computer skills'], a: 1 },
-    { q: 'How many tasks are there in IELTS Writing?', o: ['1', '2', '3', '4'], a: 1 },
-    { q: 'Which module is face-to-face?', o: ['Listening', 'Reading', 'Writing', 'Speaking'], a: 3 },
-    { q: 'Recommended essay length for Task 2?', o: ['150 words', '200 words', '250 words', '300 words'], a: 2 }
-  ];
-
-  let current = 0;
-  let score = 0;
-
-  function showSection(id) {
-    document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-    document.getElementById(id).style.display = 'block';
+  function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.style.display='none');
+    document.getElementById(id).style.display='block';
   }
 
-  function loadQuestion() {
-    const q = questions[current];
-    document.getElementById('question').textContent = q.q;
-    const options = document.getElementById('options');
-    options.innerHTML = '';
-    q.o.forEach((opt, i) => {
-      const div = document.createElement('div');
-      div.className = 'question';
-      div.innerHTML = `<input type="radio" name="opt" value="${i}"> ${opt}`;
-      options.appendChild(div);
-    });
-  }
+  let time = 3600;
+  const timer = document.getElementById('timer');
 
-  function nextQuestion() {
-    const selected = document.querySelector('input[name="opt"]:checked');
-    if (selected && parseInt(selected.value) === questions[current].a) score++;
-    current++;
-    if (current < questions.length) {
-      loadQuestion();
-    } else {
-      document.getElementById('question').textContent = 'Test Finished';
-      document.getElementById('options').innerHTML = '';
-      document.getElementById('score').textContent = `Your Score: ${score}/${questions.length}`;
+  setInterval(() => {
+    if (document.getElementById('reading').style.display !== 'none') {
+      time--;
+      const m = Math.floor(time/60);
+      const s = time%60;
+      timer.textContent = `Time left: ${m}:${s.toString().padStart(2,'0')}`;
+      if (time <= 0) alert('Time is up!');
     }
-  }
-
-  loadQuestion();
+  }, 1000);
 </script></body>
 </html>
