@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>IELTS CBT Practice Test</title>
+<title>IELTS CBT Full Practice Test</title>
 <style>
 body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f5f7fa}
 header{background:#0a3d62;color:#fff;padding:15px;text-align:center}
@@ -13,7 +13,9 @@ header{background:#0a3d62;color:#fff;padding:15px;text-align:center}
 .timer{font-weight:bold;color:#c0392b}
 button{padding:8px 12px;margin:5px 0}
 input, select{width:90%;padding:5px;margin-top:5px}
-.map-img{width:100%;margin:10px 0;border:1px solid #ccc}
+.map-img{width:100%;margin:10px 0;border:1px solid #ccc;position:relative}
+.map-container{position:relative}
+.map-label{position:absolute;background:rgba(255,255,255,0.9);padding:2px 5px;border:1px solid #333;border-radius:3px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -21,16 +23,19 @@ input, select{width:90%;padding:5px;margin-top:5px}
 <h2>IELTS Academic – CBT Practice Test</h2>
 <p class="timer" id="timer">Time: 60:00</p>
 </header>
+
 <div class="container">
 <div class="left" id="passageArea"></div>
 <div class="right" id="questionArea"></div>
 </div>
+
 <footer style="text-align:center;padding:10px">
 <button onclick="loadReading()">Reading Test</button>
 <button onclick="loadListening()">Listening Test</button>
 <button onclick="submitTest()">Submit Test</button>
 <button onclick="showHistory()">View Result History</button>
 </footer>
+
 <script>
 // ===== TIMER =====
 let time=3600; let timerInterval;
@@ -39,18 +44,65 @@ function startTimer(){
   timerInterval=setInterval(()=>{
     let m=Math.floor(time/60),s=time%60;
     document.getElementById('timer').innerText=`Time: ${m}:${s<10?'0':''}${s}`;
-    if(time>0) time--;
+    if(time>0)time--;
   },1000);
 }
 
-// ===== READING SECTION =====
+// ===== READING =====
 const readingPassages=[
-  {title:"Passage 1: Urban Farming Revolution", text:`...long realistic passage 1 (200-300 words)...`},
-  {title:"Passage 2: Sleep and Cognitive Performance", text:`...long realistic passage 2 (200-300 words)...`},
-  {title:"Passage 3: History and Evolution of Paper", text:`...long realistic passage 3 (200-300 words)...`}
+  {title:"Passage 1: Urban Farming Revolution", text:`Urban farming has become a key movement in many cities worldwide. As urban populations grow, access to fresh produce becomes challenging. Cities are transforming rooftops and vacant land into gardens, vertical farms, and community plots, reducing transportation costs and emissions. Volunteers report improved well-being and social cohesion. Critics cite space limits, high startup costs, and logistical issues. Policies are evolving to support sustainable urban agriculture while considering environmental and social benefits.`},
+  {title:"Passage 2: Sleep and Cognitive Performance", text:`Sleep is essential for human health and cognition. Adults require 7–9 hours nightly to maintain optimal memory, attention, and immunity. Chronic sleep deprivation impairs concentration, weakens immune function, and increases long-term illness risk. Modern lifestyle factors such as screen exposure, irregular schedules, and stress contribute to poor sleep. Research suggests maintaining a consistent sleep schedule, limiting devices before bed, and creating restful environments improve both mental and physical health.`},
+  {title:"Passage 3: History and Evolution of Paper", text:`Paper, first invented in China over 2,000 years ago, revolutionized record-keeping and education. Early paper was made from mulberry bark and hemp. Papermaking spread to the Islamic world and Europe, facilitating knowledge dissemination. While digital media dominates today, paper remains essential for reliability, cost-effectiveness, and accessibility in regions with limited technology. Paper also enabled innovations in printing, publishing, and art, making it a cornerstone of human progress.`}
 ];
 
-const readingQuestions=[ /* 40 questions distributed across passages with varied types */ ];
+const readingQuestions = [
+  // Passage 1
+  {passage:0, type:'TFNG', question:'Urban farming reduces transportation costs.', answer:'true'},
+  {passage:0, type:'TFNG', question:'All urban farms are profitable.', answer:'false'},
+  {passage:0, type:'TFNG', question:'Community gardens improve social cohesion.', answer:'true'},
+  {passage:0, type:'MC', question:'Which of the following is a challenge mentioned for urban farming?', options:['Space limits','Better taste','More sunlight','High demand'], answer:'Space limits'},
+  {passage:0, type:'SC', question:'Name one type of urban farm.', answer:'rooftop garden'},
+  {passage:0, type:'TFNG', question:'Urban farming can have environmental benefits.', answer:'true'},
+  {passage:0, type:'MC', question:'What is a main criticism of urban farming?', options:['Too cheap','High initial cost','Reduces community ties','Requires no water'], answer:'High initial cost'},
+  {passage:0, type:'SC', question:'Fill in: Urban farms help reduce ____ emissions.', answer:'carbon'},
+  {passage:0, type:'TFNG', question:'Urban farming does not improve mental health.', answer:'false'},
+  {passage:0, type:'SC', question:'One policy goal is to support sustainable ____ agriculture.', answer:'urban'},
+  {passage:0, type:'MC', question:'Urban farming helps mainly in:', options:['Rural areas','Cities','Deserts','Forests'], answer:'Cities'},
+  {passage:0, type:'SC', question:'Another term for vertical farms is ____ farms.', answer:'stacked'},
+  {passage:0, type:'TFNG', question:'Volunteers report improved well-being from urban farming.', answer:'true'},
+
+  // Passage 2
+  {passage:1, type:'SC', question:'Adults require how many hours of sleep per night?', answer:'7-9'},
+  {passage:1, type:'TFNG', question:'Chronic sleep deprivation improves concentration.', answer:'false'},
+  {passage:1, type:'TFNG', question:'Poor sleep increases risk of long-term illness.', answer:'true'},
+  {passage:1, type:'MC', question:'Which factor disrupts natural sleep?', options:['Regular schedules','Stress','Exercise','Fresh air'], answer:'Stress'},
+  {passage:1, type:'SC', question:'Excessive ____ exposure reduces sleep quality.', answer:'screen'},
+  {passage:1, type:'TFNG', question:'Consistent sleep schedules improve health.', answer:'true'},
+  {passage:1, type:'MC', question:'What improves sleep quality?', options:['Blue light','Irregular schedules','Restful environment','Late caffeine'], answer:'Restful environment'},
+  {passage:1, type:'SC', question:'Sleep is essential for both physical and ____ health.', answer:'mental'},
+  {passage:1, type:'TFNG', question:'Adults need less than 5 hours for optimal cognition.', answer:'false'},
+  {passage:1, type:'SC', question:'Chronic sleep deprivation weakens ____ function.', answer:'immune'},
+  {passage:1, type:'MC', question:'Which modern factor affects sleep?', options:['Screen exposure','Reading books','Sleeping early','Meditation'], answer:'Screen exposure'},
+  {passage:1, type:'SC', question:'Stress is a modern lifestyle ____ affecting sleep.', answer:'factor'},
+  {passage:1, type:'TFNG', question:'Maintaining sleep schedule benefits health.', answer:'true'},
+
+  // Passage 3
+  {passage:2, type:'SC', question:'Paper was first invented in which country?', answer:'China'},
+  {passage:2, type:'TFNG', question:'Paper allowed better record keeping.', answer:'true'},
+  {passage:2, type:'TFNG', question:'Digital media eliminated all use of paper.', answer:'false'},
+  {passage:2, type:'SC', question:'Paper was originally made from ____ and hemp.', answer:'mulberry bark'},
+  {passage:2, type:'MC', question:'Which regions adopted papermaking next?', options:['Islamic world and Europe','America','Australia','Africa'], answer:'Islamic world and Europe'},
+  {passage:2, type:'SC', question:'Paper contributed to printing, publishing, and ____.', answer:'art'},
+  {passage:2, type:'TFNG', question:'Paper remains essential in regions with limited technology.', answer:'true'},
+  {passage:2, type:'SC', question:'Paper was invented over ____ years ago.', answer:'2000'},
+  {passage:2, type:'MC', question:'Paper was a cornerstone of:', options:['Human progress','Digital innovation','Television','Mining'], answer:'Human progress'},
+  {passage:2, type:'SC', question:'Early paper was inexpensive and ____.', answer:'reliable'},
+  {passage:2, type:'TFNG', question:'Paper allowed wider access to knowledge.', answer:'true'},
+  {passage:2, type:'SC', question:'Paper helped in ____ dissemination.', answer:'knowledge'},
+  {passage:2, type:'MC', question:'Paper is still used today mainly because of:', options:['Low cost','High tech','Fragility','Complexity'], answer:'Low cost'},
+  {passage:2, type:'SC', question:'Another term for spread of papermaking is ____.', answer:'dissemination'}
+];
+
 let currentReading=0;
 function loadReading(){
   time=3600; startTimer();
@@ -64,23 +116,69 @@ function loadReading(){
   document.getElementById('passageArea').innerHTML=html;
   document.getElementById('questionArea').innerHTML=`<button onclick='prevReading()'>Previous Passage</button> <button onclick='nextReading()'>Next Passage</button>`;
 }
-function nextReading(){if(currentReading<readingPassages.length-1){currentReading++; loadReading();}}
-function prevReading(){if(currentReading>0){currentReading--; loadReading();}}
+function nextReading(){if(currentReading<readingPassages.length-1){currentReading++;loadReading();}}
+function prevReading(){if(currentReading>0){currentReading--;loadReading();}}
 
-// ===== LISTENING SECTION =====
+// ===== LISTENING =====
 const listeningSections=[
-  {part:"Part 1", audio:`Single speaker conversation script...`, questions:[/* 10 Qs */]},
-  {part:"Part 2", audio:`Monologue script...`, questions:[/* 10 Qs */]},
-  {part:"Part 3", audio:`Map/diagram description script...`, mapImage:"map_placeholder.png", questions:[/* 10 Qs */]},
-  {part:"Part 4", audio:`Multi-person lecture script...`, questions:[/* 10 Qs */]}
+  {part:"Part 1", audio:`Hello, this is John calling about booking a room for next week. The rent is 120 pounds per week and includes water and electricity. The room is on the first floor, and the minimum stay is three months.`, questions:[
+    {id:"l1", q:"Who is calling?", answer:"John"},
+    {id:"l2", q:"What is the weekly rent?", answer:"120"},
+    {id:"l3", q:"Which costs are included?", answer:"water and electricity"},
+    {id:"l4", q:"Which floor is the room on?", answer:"first"},
+    {id:"l5", q:"What is the minimum stay in months?", answer:"three"},
+    {id:"l6", q:"What is required before moving in?", answer:"deposit"},
+    {id:"l7", q:"Is there a kitchen available?", answer:"yes"},
+    {id:"l8", q:"How many rooms are available?", answer:"one"},
+    {id:"l9", q:"Which day is the room available from?", answer:"next week"},
+    {id:"l10", q:"Preferred contact method?", answer:"phone"}
+  ]},
+  {part:"Part 2", audio:`Welcome to the Riverside Sports Centre. The centre opened in April and offers swimming, gym, and fitness classes. Free parking is available. Yoga classes are on weekdays at 6 pm.`, questions:[
+    {id:"l11", q:"When did the centre open?", answer:"April"},
+    {id:"l12", q:"Who can use the swimming pool?", answer:"general public"},
+    {id:"l13", q:"Which sports are offered?", answer:"swimming, gym, fitness"},
+    {id:"l14", q:"Are parking fees charged?", answer:"no"},
+    {id:"l15", q:"What time is yoga class?", answer:"6 pm"},
+    {id:"l16", q:"On which days is yoga held?", answer:"weekdays"},
+    {id:"l17", q:"Is the gym equipment free?", answer:"yes"},
+    {id:"l18", q:"Who can attend fitness classes?", answer:"everyone"},
+    {id:"l19", q:"Where is free parking?", answer:"at the centre"},
+    {id:"l20", q:"Which facility is near the entrance?", answer:"lobby"}
+  ]},
+  {part:"Part 3", audio:`The students are discussing the new library layout. Reading rooms on left, computer stations right, group tables center, staff office back, lounge entrance.`, mapImage:"map_diagram.png", questions:[
+    {id:"l21", q:"Where are the reading rooms?", answer:"left"},
+    {id:"l22", q:"Where are computer stations?", answer:"right"},
+    {id:"l23", q:"What is in the center?", answer:"group tables"},
+    {id:"l24", q:"Where is the staff office?", answer:"back"},
+    {id:"l25", q:"Where is the lounge?", answer:"entrance"},
+    {id:"l26", q:"Who is discussing the layout?", answer:"students"},
+    {id:"l27", q:"Which area is for group study?", answer:"center"},
+    {id:"l28", q:"Which side has computers?", answer:"right"},
+    {id:"l29", q:"Which side has reading rooms?", answer:"left"},
+    {id:"l30", q:"Which area is closest to entrance?", answer:"entrance"}
+  ]},
+  {part:"Part 4", audio:`Today's lecture discusses renewable energy. Solar and wind power emphasized. Governments encourage sustainability via incentives and education.`, questions:[
+    {id:"l31", q:"Which types of energy are discussed?", answer:"solar and wind"},
+    {id:"l32", q:"What is the focus of the lecture?", answer:"renewable energy"},
+    {id:"l33", q:"Who encourages sustainability?", answer:"governments"},
+    {id:"l34", q:"Which method is used to promote sustainability?", answer:"incentives"},
+    {id:"l35", q:"Which other method is mentioned?", answer:"education"},
+    {id:"l36", q:"Is fossil fuel mentioned?", answer:"no"},
+    {id:"l37", q:"What is the goal of sustainability?", answer:"environmental protection"},
+    {id:"l38", q:"What is reduced by renewable energy?", answer:"carbon emissions"},
+    {id:"l39", q:"Are solar and wind energy renewable?", answer:"yes"},
+    {id:"l40", q:"Which sector implements policies?", answer:"government"}
+  ]}
 ];
+
 let currentListening=0; let played=[false,false,false,false];
 function playListening(i){if(played[i]){alert('Already played');return;} let u=new SpeechSynthesisUtterance(listeningSections[i].audio);u.lang='en-GB';u.rate=0.9; u.onend=()=>played[i]=true; speechSynthesis.speak(u);}
 function loadListening(){
   time=2400; startTimer();
   let s=listeningSections[currentListening];
   let html=`<h3>${s.part}</h3><button onclick='playListening(${currentListening})'>▶ Play Audio</button>`;
-  if(s.mapImage) html+=`<img src='${s.mapImage}' class='map-img'>`;
+  if(s.mapImage) html+=`<div class='map-container'><img src='${s.mapImage}' class='map-img' id='mapImage'>`+
+    s.questions.map((q,j)=>`<div class='map-label' style='top:${10+j*8}%;left:${20+j*6}%' onclick="document.getElementById('${q.id}').value='${q.answer}'">${q.q}</div>`).join('')+`</div>`;
   s.questions.forEach((q,j)=>{html+=`<div class='question'><label>${j+1}. ${q.q}</label><br><input type='text' id='${q.id}'></div>`;});
   document.getElementById('passageArea').innerHTML=html;
   document.getElementById('questionArea').innerHTML=`<button onclick='prevListening()'>Previous Section</button> <button onclick='nextListening()'>Next Section</button>`;
@@ -91,17 +189,5 @@ function prevListening(){if(currentListening>0){currentListening--; loadListenin
 // ===== SCORING & HISTORY =====
 function band(score){if(score>=39)return 9;if(score>=37)return 8.5;if(score>=35)return 8;if(score>=32)return 7.5;if(score>=30)return 7;if(score>=26)return 6.5;if(score>=23)return 6;if(score>=18)return 5.5;if(score>=16)return 5;return 4.5;}
 function saveResult(r,l){const history=JSON.parse(localStorage.getItem('ieltsHistory')||'[]'); history.push({date:new Date().toLocaleString(),reading:r,listening:l}); localStorage.setItem('ieltsHistory',JSON.stringify(history));}
-function showHistory(){const history=JSON.parse(localStorage.getItem('ieltsHistory')||'[]'); if(history.length===0){alert('No results yet'); return;} alert(history.map(h=>`${h.date}\nReading: ${h.reading}/40 Listening: ${h.listening}/40`).join('\n\n'));}
-function submitTest(){
-  let r=0,l=0;
-  readingQuestions.forEach((q,i)=>{let val=document.getElementById(`r${q.passage}_${i}`)?.value?.toLowerCase().trim(); if(val===q.answer.toLowerCase()) r++;});
-  listeningSections.forEach(s=>s.questions.forEach(q=>{let val=document.getElementById(q.id)?.value?.toLowerCase().trim(); if(val===q.answer.toLowerCase()) l++;}));
-  saveResult(r,l);
-  alert(`Reading: ${r}/40 Band ${band(r)}\nListening: ${l}/40 Band ${band(l)}`);
-}
-
-// Load default
-loadReading();
-</script>
-</body>
-</html>
+function showHistory(){const history=JSON.parse(localStorage.getItem('ieltsHistory')||'[]'); if(history.length===0){alert('No results yet');return;} alert(history.map(h=>`${h.date}\nReading: ${h.reading}/40 Listening: ${h.listening}/40`).join('\n\n'));}
+function submit
