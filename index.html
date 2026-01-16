@@ -312,48 +312,41 @@ function submitMockTest(){
   else if(readingScore>=16) readingBand=5;
   else readingBand=4.5;
   
-// ===== IMPROVED WRITING SCORING =====
-function submitWriting(){
-  const task1=document.getElementById('w1').value.trim();
-  const task2=document.getElementById('w2').value.trim();
+// ==== WRITING SCORING ====
+  const task1=document.getElementById('w1')?.value.trim()||"";
+  const task2=document.getElementById('w2')?.value.trim()||"";
+  let writingBand=0;
+  if(task1 && task2){
+    function countParagraphs(text){return text.split(/\n+/).filter(p=>p.trim()!=='').length;}
+    function countComplexWords(text,list){let c=0; const words=text.toLowerCase().match(/\b\w+\b/g)||[]; words.forEach(w=>{if(list.includes(w)) c++;}); return c;}
+    function countKeywords(text,list){let c=0; list.forEach(k=>{if(text.toLowerCase().includes(k.toLowerCase())) c++;}); return c;}
+    const t1Kw=['trend','increase','decrease','chart','data','percentage','significant','rise','fall'];
+    const t1Comp=['significant','dramatic','moderate','slight','fluctuation','peak','decline','rapid','gradual','steady'];
+    const t2Kw=['technology','education','improve','problem','opinion','benefit','impact','solution','discuss','agree','disagree'];
+    const t2Comp=['significant','substantial','beneficial','challenging','adversely','consequence','perspective','approach','enhance','considerable'];
+    let t1Points=0; let t2Points=0;
+    if(task1.split(/\s+/).length>=150) t1Points++;
+    if(countKeywords(task1,t1Kw)>=3) t1Points++;
+    if(countParagraphs(task1)>=2) t1Points++;
+    if(countComplexWords(task1,t1Comp)>=5) t1Points++;
+    t1Points += Math.min(task1.split(/[.!?]+/).filter(s=>s.trim()!=='').length,5);
+    if(task2.split(/\s+/).length>=250) t2Points++;
+    if(countKeywords(task2,t2Kw)>=3) t2Points++;
+    if(countParagraphs(task2)>=2) t2Points++;
+    if(countComplexWords(task2,t2Comp)>=5) t2Points++;
+    t2Points += Math.min(task2.split(/[.!?]+/).filter(s=>s.trim()!=='').length,5);
+    let t1Band=Math.min(9, Math.max(4,(t1Points/10*9).toFixed(1)));
+    let t2Band=Math.min(9, Math.max(4,(t2Points/10*9).toFixed(1)));
+    writingBand=((parseFloat(t1Band)+parseFloat(t2Band))/2).toFixed(1);
+  }
 
-  function countParagraphs(text){return text.split(/\n+/).filter(p=>p.trim()!=='').length;}
-  function countComplexWords(text,list){let c=0; const words=text.toLowerCase().match(/\b\w+\b/g)||[]; words.forEach(w=>{if(list.includes(w)) c++;}); return c;}
-  function countKeywords(text,list){let c=0; list.forEach(k=>{if(text.toLowerCase().includes(k.toLowerCase())) c++;}); return c;}
-
-  // Task1
-  const t1Kw=['trend','increase','decrease','chart','data','percentage','significant','rise','fall'];
-  const t1Comp=['significant','dramatic','moderate','slight','fluctuation','peak','decline','rapid','gradual','steady'];
-  let t1Points=0;
-  if(task1.split(/\s+/).length>=150) t1Points++;
-  if(countKeywords(task1,t1Kw)>=3) t1Points++;
-  if(countParagraphs(task1)>=2) t1Points++;
-  if(countComplexWords(task1,t1Comp)>=5) t1Points++;
-  t1Points += Math.min(task1.split(/[.!?]+/).filter(s=>s.trim()!=='').length,5);
-  const t1Band=Math.min(9, Math.max(4,(t1Points/10*9).toFixed(1)));
-
-  // Task2
-  const t2Kw=['technology','education','improve','problem','opinion','benefit','impact','solution','discuss','agree','disagree'];
-  const t2Comp=['significant','substantial','beneficial','challenging','adversely','consequence','perspective','approach','enhance','considerable'];
-  let t2Points=0;
-  if(task2.split(/\s+/).length>=250) t2Points++;
-  if(countKeywords(task2,t2Kw)>=3) t2Points++;
-  if(countParagraphs(task2)>=2) t2Points++;
-  if(countComplexWords(task2,t2Comp)>=5) t2Points++;
-  t2Points += Math.min(task2.split(/[.!?]+/).filter(s=>s.trim()!=='').length,5);
-  const t2Band=Math.min(9, Math.max(4,(t2Points/10*9).toFixed(1)));
-
-  const writingBand=((parseFloat(t1Band)+parseFloat(t2Band))/2).toFixed(1);
-
-  alert(`Writing Task 1 Words: ${task1.split(/\s+/).length} | Band: ${t1Band}\nWriting Task 2 Words: ${task2.split(/\s+/).length} | Band: ${t2Band}\nOverall Writing Band: ${writingBand}`);
-
-  localStorage.setItem('writingTask1',task1);
-  localStorage.setItem('writingTask2',task2);
-
-  showHome();
+  alert(
+    `Listening: ${listeningScore}/40 | Band: ${listeningBand}\n`+
+    `Reading: ${readingScore}/40 | Band: ${readingBand}\n`+
+    `Writing Band: ${writingBand}`
+  );
 }
 
-// ===== INITIAL LOAD =====
 showHome();
 </script>
 </body>
