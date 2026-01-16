@@ -161,11 +161,72 @@ function submitTest(){
  let r=0,l=0;
  readingAnswers.forEach((a,i)=>{let u=document.getElementById('r'+(i+1))?.value.toLowerCase().trim();if(u===a)r++;});
  listeningAnswers.forEach((a,i)=>{let u=document.getElementById('l'+(i+1))?.value.toLowerCase().trim();if(u===a)l++;});
+ saveResult(r,l);
+ alert(`Reading: ${r}/40 Band ${band(r)}
+Listening: ${l}/40 Band ${band(l)}`);
+});
+ listeningAnswers.forEach((a,i)=>{let u=document.getElementById('l'+(i+1))?.value.toLowerCase().trim();if(u===a)l++;});
  alert(`Reading: ${r}/40 Band ${band(r)}
 Listening: ${l}/40 Band ${band(l)}`);
 }
 
 loadReading();
+
+/**************** MULTIPLE MOCK TESTS ****************/
+let currentTest = 0;
+const mockTests = [
+  {
+    name: "Mock Test 1",
+    readingPassages,
+    readingQuestionsText,
+    readingAnswers,
+    listeningScripts,
+    listeningAnswers
+  },
+  {
+    name: "Mock Test 2",
+    readingPassages: readingPassages.map(p=>({...p, text: p.text + " This test focuses more on analytical reading."})),
+    readingQuestionsText,
+    readingAnswers,
+    listeningScripts,
+    listeningAnswers
+  }
+];
+
+function loadMockTest(index){
+  currentTest = index;
+  loadReading();
+  alert(`Loaded ${mockTests[index].name}`);
+}
+
+/**************** RESULT HISTORY (LOCAL STORAGE) ****************/
+function saveResult(readingScore, listeningScore){
+  const history = JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
+  history.push({
+    date: new Date().toLocaleString(),
+    test: mockTests[currentTest].name,
+    reading: readingScore,
+    listening: listeningScore
+  });
+  localStorage.setItem('ieltsHistory', JSON.stringify(history));
+}
+
+function showHistory(){
+  const history = JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
+  if(history.length===0){alert('No results yet');return;}
+  let msg = 'RESULT HISTORY
+
+';
+  history.forEach(h=>{
+    msg += `${h.date}
+${h.test}
+Reading: ${h.reading}/40 Listening: ${h.listening}/40
+
+`;
+  });
+  alert(msg);
+}
+
 </script><footer style="text-align:center;padding:10px">
 <button onclick="loadReading()">Reading Test</button>
 <button onclick="loadListening()">Listening Test</button>
