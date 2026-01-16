@@ -21,216 +21,106 @@ button{padding:8px 12px;margin:5px 0}
 </header><div class="container">
 <div class="left" id="passageArea"></div>
 <div class="right" id="questionArea"></div>
-</div><script>
-/**************** TIMER ****************/
+</div><footer style="text-align:center;padding:10px">
+<button onclick="loadMockTest(0)">Mock Test 1</button>
+<button onclick="loadMockTest(1)">Mock Test 2</button>
+<button onclick="loadReading()">Reading Test</button>
+<button onclick="loadListening()">Listening Test</button>
+<button onclick="submitTest()">Submit Test</button>
+<button onclick="showHistory()">View Result History</button>
+</footer><script>
+// TIMER
 let time = 3600;
 let timerInterval;
 function startTimer(){
   clearInterval(timerInterval);
   timerInterval = setInterval(()=>{
-    let m = Math.floor(time/60);
-    let s = time%60;
-    document.getElementById('timer').innerText = `Time: ${m}:${s<10?'0':''}${s}`;
+    let m=Math.floor(time/60);
+    let s=time%60;
+    document.getElementById('timer').innerText=`Time: ${m}:${s<10?'0':''}${s}`;
     if(time>0) time--;
   },1000);
 }
 
-/**************** READING CONTENT (REALISTIC) ****************/
-const readingPassages = [
-{
- title:"Passage 1: The Rise of Urban Farming",
- text:`Urban farming refers to the practice of cultivating crops and raising livestock within cities and towns. In recent years, it has gained popularity as urban populations increase and concerns about food security intensify. Rooftop gardens, vertical farms, and community allotments allow residents to grow fresh produce close to where it is consumed, significantly reducing transportation costs and carbon emissions. Supporters argue that urban farming improves mental well-being and strengthens community bonds. However, critics highlight challenges such as limited space, soil contamination, and high initial investment costs.`
-},
-{
- title:"Passage 2: Sleep and Human Performance",
- text:`Sleep is essential for physical health, cognitive function, and emotional well-being. Research indicates that most adults require between seven and nine hours of sleep per night to function optimally. Insufficient sleep has been linked to impaired memory, reduced concentration, weakened immune response, and a higher risk of chronic illnesses. Despite widespread awareness of its importance, modern lifestyles, shift work, and excessive screen exposure continue to disrupt natural sleep patterns.`
-},
-{
- title:"Passage 3: The Development of Paper",
- text:`Paper was first invented in China during the Han Dynasty and later spread through trade routes to the Middle East and Europe. Its introduction transformed education, administration, and the dissemination of knowledge. Although digital technology now dominates information storage, paper remains widely used due to its affordability, reliability, and accessibility, particularly in regions with limited access to electronic devices.`
-}
-];
-
-const readingQuestionsText = [
-"Urban farming mainly helps reduce what type of emissions?",
-"Urban farming improves mental health. TRUE/FALSE",
-"Vertical farms are used in urban areas. TRUE/FALSE",
-"Urban farming eliminates food transport entirely. TRUE/FALSE",
-"Space limitation is a challenge. TRUE/FALSE",
-"Community bonds are strengthened. TRUE/FALSE",
-"Urban soil is always safe. TRUE/FALSE",
-"Which method is mentioned?",
-"What is a criticism?",
-"Where are gardens built?",
-"What does urban farming reduce?",
-"What do supporters argue?",
-"Initial costs are described as what?",
-
-"How many hours of sleep do adults need?",
-"Sleep affects memory. TRUE/FALSE",
-"Sleep deprivation improves immunity. TRUE/FALSE",
-"Modern lifestyles affect sleep. TRUE/FALSE",
-"Shift work disrupts sleep. TRUE/FALSE",
-"Sleep is linked to illness. TRUE/FALSE",
-"Which system is weakened?",
-"What risk increases?",
-"What exposure disrupts sleep?",
-"Memory is affected by what?",
-"Sleep affects emotional what?",
-"Screen use impacts what?",
-
-"Paper was invented where?",
-"Paper spread through trade. TRUE/FALSE",
-"Digital media ended paper use. TRUE/FALSE",
-"Paper is affordable. TRUE/FALSE",
-"Paper is reliable because of what?",
-"Paper is used where technology is what?",
-"Paper was invented how long ago?",
-"Which dynasty invented paper?",
-"What did paper transform?",
-"What dominates information storage now?",
-"Paper is accessible to whom?",
-"Paper is still used because of what?",
-"Limited access to what affects paper use?",
-"Paper aided which field?"
-];
-
-const readingAnswers = [
+// MOCK TEST DATA
+let currentTest=0;
+const mockTests=[
+  {
+    name:"Mock Test 1",
+    readingPassages:[
+      {title:"Passage 1: The Rise of Urban Farming", text:`Urban farming refers to the practice of cultivating crops and raising livestock within cities. Rooftop gardens, vertical farms, and community plots provide fresh produce and reduce carbon emissions. Supporters highlight community bonds and mental well-being. Critics mention space limits and high initial costs.`},
+      {title:"Passage 2: Sleep and Human Performance", text:`Sleep is essential for health. Adults need 7-9 hours per night. Lack of sleep affects memory, concentration, and immunity. Modern lifestyles and screen use disrupt natural cycles.`},
+      {title:"Passage 3: The Development of Paper", text:`Paper was invented in China over 2000 years ago, later spread globally. It transformed education and record keeping. Digital media is dominant but paper remains due to affordability and accessibility.`}
+    ],
+    readingQuestions:[
 "carbon","true","true","false","true","true","false","vertical farms","limited space","rooftops","transportation","community bonds","high",
 "seven to nine","true","false","true","true","true","immune","illness","screen","sleep","well-being","sleep",
 "china","true","false","true","reliability","limited","two thousand","han","education","digital","regions","accessibility","technology","administration"
-];
-
-function loadReading(){
-  time = 3600;
-  startTimer();
-  document.getElementById('passageArea').innerHTML = readingPassages.map(p=>`<h3>${p.title}</h3><p>${p.text}</p>`).join('');
-  document.getElementById('questionArea').innerHTML = readingQuestionsText.map((q,i)=>`
-    <div class='question'>
-      <label>${i+1}. ${q}</label><br>
-      <input type='text' id='r${i+1}' placeholder='Your answer'>
-    </div>`).join('');
-}
-
-/**************** LISTENING (REALISTIC CBT STYLE) ****************/
-const listeningScripts = [
-`The student plans to move in September. The weekly rent is one hundred and fifty pounds and includes utilities. The room is on the second floor and requires a six month minimum stay.`,
-`The Riverside Sports Centre opened in April and is available to the general public. Free parking is provided for everyone and the gym equipment was imported from Germany.`,
-`The group project focuses on urban transport. Sarah will write the introduction. Research will be done using online questionnaires. The presentation lasts fifteen minutes and is held in the lecture hall.`,
-`The lecture explains that sustainability protects future needs. Renewable energy includes wind and solar power. Recycling reduces landfill waste and cooperation is required globally.`
-];
-
-const listeningQuestionsText = [
-...Array.from({length:40},(_,i)=>`Question ${i+1}`)
-];
-
-const listeningAnswers = [
-"september","150","utilities","second","six","deposit","two","five","pets","email",
-"april","general public","germany","indoor football and badminton","everyone","weekday","personal","healthy","10","management",
-"urban transport","sarah","online questionnaires","15","time management","friday","eight","lecture hall","harris","pdf",
-"needs","twentieth","intensive","carbon","landfill","solar","incentives","energy","environmental","cooperation"
-];
-
-let played=[false,false,false,false];
-function playListening(i){
-  if(played[i]){alert('This section can only be played once');return;}
-  let u=new SpeechSynthesisUtterance(listeningScripts[i]);
-  u.lang='en-GB';u.rate=0.9;u.onend=()=>played[i]=true;
-  speechSynthesis.speak(u);
-}
-
-function loadListening(){
-  time=2400;startTimer();
-  document.getElementById('passageArea').innerHTML=`<h3>Listening Sections</h3>
-  <button onclick='playListening(0)'>Play Section 1</button>
-  <button onclick='playListening(1)'>Play Section 2</button>
-  <button onclick='playListening(2)'>Play Section 3</button>
-  <button onclick='playListening(3)'>Play Section 4</button>`;
-  document.getElementById('questionArea').innerHTML=listeningQuestionsText.map((q,i)=>`
-  <div class='question'>${i+1}. <input id='l${i+1}'></div>`).join('');
-}
-
-/**************** SCORING ****************/
-function band(score){
- if(score>=39)return 9;if(score>=37)return 8.5;if(score>=35)return 8;
- if(score>=32)return 7.5;if(score>=30)return 7;if(score>=26)return 6.5;
- if(score>=23)return 6;if(score>=18)return 5.5;if(score>=16)return 5;return 4.5;
-}
-
-function submitTest(){
- let r=0,l=0;
- readingAnswers.forEach((a,i)=>{let u=document.getElementById('r'+(i+1))?.value.toLowerCase().trim();if(u===a)r++;});
- listeningAnswers.forEach((a,i)=>{let u=document.getElementById('l'+(i+1))?.value.toLowerCase().trim();if(u===a)l++;});
- saveResult(r,l);
- alert(`Reading: ${r}/40 Band ${band(r)}
-Listening: ${l}/40 Band ${band(l)}`);
-});
- listeningAnswers.forEach((a,i)=>{let u=document.getElementById('l'+(i+1))?.value.toLowerCase().trim();if(u===a)l++;});
- alert(`Reading: ${r}/40 Band ${band(r)}
-Listening: ${l}/40 Band ${band(l)}`);
-}
-
-loadReading();
-
-/**************** MULTIPLE MOCK TESTS ****************/
-let currentTest = 0;
-const mockTests = [
-  {
-    name: "Mock Test 1",
-    readingPassages,
-    readingQuestionsText,
-    readingAnswers,
-    listeningScripts,
-    listeningAnswers
+    ],
+    readingQuestionsText:[
+"Urban farming mainly helps reduce what type of emissions?","Urban farming improves mental health. TRUE/FALSE","Vertical farms are used in urban areas. TRUE/FALSE","Urban farming eliminates food transport entirely. TRUE/FALSE","Space limitation is a challenge. TRUE/FALSE","Community bonds are strengthened. TRUE/FALSE","Urban soil is always safe. TRUE/FALSE","Which method is mentioned?","What is a criticism?","Where are gardens built?","What does urban farming reduce?","What do supporters argue?","Initial costs are described as what?",
+"How many hours of sleep do adults need?","Sleep affects memory. TRUE/FALSE","Sleep deprivation improves immunity. TRUE/FALSE","Modern lifestyles affect sleep. TRUE/FALSE","Shift work disrupts sleep. TRUE/FALSE","Sleep is linked to illness. TRUE/FALSE","Which system is weakened?","What risk increases?","What exposure disrupts sleep?","Memory is affected by what?","Sleep affects emotional what?","Screen use impacts what?",
+"Paper was invented where?","Paper spread through trade. TRUE/FALSE","Digital media ended paper use. TRUE/FALSE","Paper is affordable. TRUE/FALSE","Paper is reliable because of what?","Paper is used where technology is what?","Paper was invented how long ago?","Which dynasty invented paper?","What did paper transform?","What dominates information storage now?","Paper is accessible to whom?","Paper is still used because of what?","Limited access to what affects paper use?","Paper aided which field?"
+    ],
+    listeningScripts:[
+`The student plans to move in September. The weekly rent is 150 pounds and includes utilities. The room is on the second floor and requires a six month minimum stay.`,`The Riverside Sports Centre opened in April and is available to the general public. Free parking is provided for everyone and the gym equipment was imported from Germany.`,`The group project focuses on urban transport. Sarah writes the introduction. Research is done using online questionnaires. Presentation lasts 15 minutes and is held in the lecture hall.`,`The lecture explains that sustainability protects future needs. Renewable energy includes wind and solar power. Recycling reduces landfill waste and cooperation is required globally.`
+    ],
+    listeningAnswers:[
+"september","150","utilities","second","six","deposit","two","five","pets","email","april","general public","germany","indoor football and badminton","everyone","weekday","personal","healthy","10","management","urban transport","sarah","online questionnaires","15","time management","friday","eight","lecture hall","harris","pdf","needs","twentieth","intensive","carbon","landfill","solar","incentives","energy","environmental","cooperation"
+    ]
   },
   {
-    name: "Mock Test 2",
-    readingPassages: readingPassages.map(p=>({...p, text: p.text + " This test focuses more on analytical reading."})),
-    readingQuestionsText,
-    readingAnswers,
-    listeningScripts,
-    listeningAnswers
+    name:"Mock Test 2",
+    readingPassages:[], readingQuestions:[], readingQuestionsText:[], listeningScripts:[], listeningAnswers:[]
   }
 ];
 
-function loadMockTest(index){
-  currentTest = index;
-  loadReading();
-  alert(`Loaded ${mockTests[index].name}`);
+// LOAD READING
+function loadReading(){
+  const test=mockTests[currentTest];
+  time=3600; startTimer();
+  document.getElementById('passageArea').innerHTML=test.readingPassages.map(p=>`<h3>${p.title}</h3><p>${p.text}</p>`).join('');
+  document.getElementById('questionArea').innerHTML=test.readingQuestionsText.map((q,i)=>`<div class='question'><label>${i+1}. ${q}</label><br><input type='text' id='r${i+1}'></div>`).join('');
 }
 
-/**************** RESULT HISTORY (LOCAL STORAGE) ****************/
-function saveResult(readingScore, listeningScore){
-  const history = JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
-  history.push({
-    date: new Date().toLocaleString(),
-    test: mockTests[currentTest].name,
-    reading: readingScore,
-    listening: listeningScore
-  });
-  localStorage.setItem('ieltsHistory', JSON.stringify(history));
+// LOAD LISTENING
+let played=[false,false,false,false];
+function playListening(i){
+  if(played[i]){alert('This section can only be played once');return;}
+  let u=new SpeechSynthesisUtterance(mockTests[currentTest].listeningScripts[i]);
+  u.lang='en-GB'; u.rate=0.9; u.onend=()=>played[i]=true;
+  speechSynthesis.speak(u);
+}
+function loadListening(){
+  const test=mockTests[currentTest];
+  time=2400; startTimer();
+  document.getElementById('passageArea').innerHTML=`<h3>Listening Sections</h3><button onclick='playListening(0)'>Play Section 1</button><button onclick='playListening(1)'>Play Section 2</button><button onclick='playListening(2)'>Play Section 3</button><button onclick='playListening(3)'>Play Section 4</button>`;
+  document.getElementById('questionArea').innerHTML=Array.from({length:40},(_,i)=>`<div class='question'>${i+1}. <input id='l${i+1}'></div>`).join('');
 }
 
+// SUBMIT TEST & SAVE HISTORY
+function band(score){if(score>=39)return 9;if(score>=37)return 8.5;if(score>=35)return 8;if(score>=32)return 7.5;if(score>=30)return 7;if(score>=26)return 6.5;if(score>=23)return 6;if(score>=18)return 5.5;if(score>=16)return 5;return 4.5;}
+function saveResult(r,l){
+  const history=JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
+  history.push({date:new Date().toLocaleString(),test:mockTests[currentTest].name,reading:r,listening:l});
+  localStorage.setItem('ieltsHistory',JSON.stringify(history));
+}
 function showHistory(){
-  const history = JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
-  if(history.length===0){alert('No results yet');return;}
-  let msg = 'RESULT HISTORY
-
-';
-  history.forEach(h=>{
-    msg += `${h.date}
-${h.test}
-Reading: ${h.reading}/40 Listening: ${h.listening}/40
-
-`;
-  });
-  alert(msg);
+  const history=JSON.parse(localStorage.getItem('ieltsHistory')||'[]');
+  if(history.length===0){alert('No results yet'); return;}
+  alert(history.map(h=>`${h.date}\n${h.test}\nReading: ${h.reading}/40 Listening: ${h.listening}/40`).join('\n\n'));
+}
+function submitTest(){
+  const test=mockTests[currentTest];
+  let r=0,l=0;
+  test.readingAnswers.forEach((a,i)=>{let u=document.getElementById('r'+(i+1))?.value.toLowerCase().trim();if(u===a.toLowerCase())r++;});
+  test.listeningAnswers.forEach((a,i)=>{let u=document.getElementById('l'+(i+1))?.value.toLowerCase().trim();if(u===a.toLowerCase())l++;});
+  saveResult(r,l);
+  alert(`Reading: ${r}/40 Band ${band(r)}\nListening: ${l}/40 Band ${band(l)}`);
 }
 
-</script><footer style="text-align:center;padding:10px">
-<button onclick="loadReading()">Reading Test</button>
-<button onclick="loadListening()">Listening Test</button>
-<button onclick="submitTest()">Submit Test</button>
-</footer>
-</body>
+function loadMockTest(index){currentTest=index; loadReading(); alert(`Loaded ${mockTests[index].name}`);}
+
+loadReading();
+</script></body>
 </html>
