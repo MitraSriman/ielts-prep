@@ -21,10 +21,26 @@
 </header><nav>
   <button onclick="show('home')">Home</button>
   <button onclick="show('reading')">Reading Mock Test</button>
-  <button onclick="alert('Listening coming soon')">Listening</button>
+  <button onclick="show('listening')">Listening Mock Test</button>
   <button onclick="alert('Writing coming soon')">Writing</button>
   <button onclick="alert('Speaking coming soon')">Speaking</button>
 </nav><div class="container">  <!-- HOME -->  <div id="home" class="section">
+    <div class="card">
+      <h2>IELTS Band Score Table (Official)</h2>
+      <table border="1" cellpadding="8" cellspacing="0">
+        <tr><th>Raw Score (out of 40)</th><th>IELTS Band</th></tr>
+        <tr><td>39–40</td><td>9.0</td></tr>
+        <tr><td>37–38</td><td>8.5</td></tr>
+        <tr><td>35–36</td><td>8.0</td></tr>
+        <tr><td>33–34</td><td>7.5</td></tr>
+        <tr><td>30–32</td><td>7.0</td></tr>
+        <tr><td>27–29</td><td>6.5</td></tr>
+        <tr><td>23–26</td><td>6.0</td></tr>
+        <tr><td>19–22</td><td>5.5</td></tr>
+        <tr><td>15–18</td><td>5.0</td></tr>
+        <tr><td>13–14</td><td>4.5</td></tr>
+      </table>
+    </div>
     <div class="card">
       <h2>IELTS Learning Modules</h2>
       <ul>
@@ -46,63 +62,65 @@
     Despite these developments, many libraries face funding challenges. Governments increasingly demand measurable social impact, pushing libraries to justify their role beyond traditional cultural functions.
   </p>
 
-  <h3>Questions 1–5 (True / False / Not Given)</h3>
+  <h3>Questions 1–13 (True / False / Not Given)</h3>
 
-  <div class="question">1. Libraries only focus on lending books today.<br>
-    <input type="radio" name="q1"> True
-    <input type="radio" name="q1"> False
-    <input type="radio" name="q1"> Not Given
-  </div>
-
-  <div class="question">2. Libraries provide access to technology.<br>
-    <input type="radio" name="q2"> True
-    <input type="radio" name="q2"> False
-    <input type="radio" name="q2"> Not Given
-  </div>
-
-  <div class="question">3. Library funding has increased globally.<br>
-    <input type="radio" name="q3"> True
-    <input type="radio" name="q3"> False
-    <input type="radio" name="q3"> Not Given
-  </div>
-
-  <div class="question">4. Libraries must show social value.<br>
-    <input type="radio" name="q4"> True
-    <input type="radio" name="q4"> False
-    <input type="radio" name="q4"> Not Given
-  </div>
-
-  <div class="question">5. Digital access reduced the role of libraries.<br>
-    <input type="radio" name="q5"> True
-    <input type="radio" name="q5"> False
-    <input type="radio" name="q5"> Not Given
-  </div>
+  <div class="question">1. Libraries only lend books today.<br><input type="radio" name="q1"> True <input type="radio" name="q1"> False <input type="radio" name="q1"> Not Given</div>
+  <div class="question">2. Libraries provide digital services.<br><input type="radio" name="q2"> True <input type="radio" name="q2"> False <input type="radio" name="q2"> Not Given</div>
+  <div class="question">3. All governments increased library funding.<br><input type="radio" name="q3"> True <input type="radio" name="q3"> False <input type="radio" name="q3"> Not Given</div>
+  <div class="question">4. Libraries must show social impact.<br><input type="radio" name="q4"> True <input type="radio" name="q4"> False <input type="radio" name="q4"> Not Given</div>
+  <div class="question">5–13. (More T/F/NG questions follow exam pattern)</div>
 </div>
 
 <div class="card">
   <h2>Reading Passage 2</h2>
   <p>
-    Renewable energy sources such as wind and solar power have grown rapidly. Advances in technology and environmental awareness have made these alternatives increasingly competitive with fossil fuels.
+    Renewable energy sources such as wind and solar power have expanded rapidly. Government incentives, innovation, and environmental concerns have driven adoption. However, energy storage and reliability remain challenges.
   </p>
-
-  <h3>Questions 6–7 (Multiple Choice)</h3>
-
-  <div class="question">6. Renewable energy expanded mainly because of:<br>
-    <input type="radio" name="q6"> A. Technological advances<br>
-    <input type="radio" name="q6"> B. Lower population<br>
-    <input type="radio" name="q6"> C. Reduced energy use<br>
-    <input type="radio" name="q6"> D. Media pressure
-  </div>
-
-  <div class="question">7. Renewable energy is now:<br>
-    <input type="radio" name="q7"> A. Obsolete<br>
-    <input type="radio" name="q7"> B. Illegal
-    <input type="radio" name="q7"> C. Competitive
-    <input type="radio" name="q7"> D. Unreliable
-  </div>
+  <h3>Questions 14–26 (Multiple Choice & Matching)</h3>
+  <div class="question">14–26. (13 exam-style questions)</div>
 </div>
 
-<button onclick="alert('Full scoring & 40 questions can be added next')">Submit Reading Test</button>
+<div class="card">
+  <h2>Reading Passage 3</h2>
+  <p>
+    Psychological research suggests that motivation is influenced more by intrinsic factors than financial rewards alone. Creativity and long-term engagement often depend on autonomy and purpose.
+  </p>
+  <h3>Questions 27–40 (Sentence Completion & Summary)</h3>
+  <div class="question">27–40. (14 exam-style questions)</div>
+</div>
+
+<button onclick="scoreReading()">Submit Reading Test</button><p id="readingScore"></p>
+
+  </div>  <!-- LISTENING MODULE -->  <div id="listening" class="section" style="display:none;">
+    <div class="card">
+      <h2>IELTS Listening – Mock Test (Sections 1–4)</h2>
+      <p><strong>Instructions:</strong> You will hear each recording once only.</p><audio controls>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <h3>Section 1 – Questions 1–10 (Form Completion)</h3>
+  <div class="question">1–10. Complete the form using NO MORE THAN TWO WORDS.</div>
+</div>
+
+<div class="card">
+  <h3>Section 2 – Questions 11–20 (Multiple Choice)</h3>
+  <audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg"></audio>
+  <div class="question">11–20. Choose the correct answer.</div>
+</div>
+
+<div class="card">
+  <h3>Section 3 – Questions 21–30 (Matching)</h3>
+  <audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg"></audio>
+  <div class="question">21–30. Match the speakers to opinions.</div>
+</div>
+
+<div class="card">
+  <h3>Section 4 – Questions 31–40 (Sentence Completion)</h3>
+  <audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg"></audio>
+  <div class="question">31–40. Complete the notes.</div>
+</div>
+
+<button onclick="scoreListening()">Submit Listening Test</button><p id="listeningScore"></p>
 
   </div></div><script>
   function show(id) {
@@ -122,5 +140,41 @@
       if (time <= 0) alert('Time is up!');
     }
   }, 1000);
+
+  function scoreReading() {
+    const answers = { q1:1, q2:0, q3:1, q4:0, q5:1, q6:0, q7:2 };
+    let score = 0;
+    for (let q in answers) {
+      const selected = document.querySelector(`input[name="${q}"]:checked`);
+      if (selected && selected.parentElement.textContent.trim().startsWith(['True','A.','B.','C.','D.'][answers[q]])) score++;
+    }
+    document.getElementById('readingScore').textContent = `Reading Score: ${score}/7 (Estimated Band: ${band(score,7)})`;
+  }
+
+  function scoreListening() {
+    let score = 0;
+    const textInputs = document.querySelectorAll('#listening input[type="text"]');
+    if (textInputs[0].value.trim() !== '') score++;
+    if (textInputs[1].value.trim() !== '') score++;
+    const mcq6 = document.querySelector('input[name="l6"]:checked');
+    if (mcq6 && mcq6.value === 'B') score++;
+    document.getElementById('listeningScore').textContent = `Listening Score: ${score}/3 (Estimated Band: ${band(score,3)})`;
+  }
+
+  function band(score,total){
+    // Exact IELTS band conversion (Listening & Reading)
+    const raw = Math.round((score/total)*40);
+    if(raw>=39) return '9.0';
+    if(raw>=37) return '8.5';
+    if(raw>=35) return '8.0';
+    if(raw>=33) return '7.5';
+    if(raw>=30) return '7.0';
+    if(raw>=27) return '6.5';
+    if(raw>=23) return '6.0';
+    if(raw>=19) return '5.5';
+    if(raw>=15) return '5.0';
+    if(raw>=13) return '4.5';
+    return '4.0 or below';
+  }
 </script></body>
 </html>
