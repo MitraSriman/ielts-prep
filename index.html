@@ -1,128 +1,113 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Free IELTS Preparation Website</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: Arial, sans-serif; margin:0; background:#f4f6f8; }
-    header { background:#1e88e5; color:white; padding:20px; text-align:center; }
-    nav { background:#1565c0; display:flex; justify-content:center; gap:15px; padding:10px; }
-    nav button { background:white; border:none; padding:10px 14px; border-radius:6px; cursor:pointer; font-weight:bold; }
-    .container { max-width:1100px; margin:auto; padding:20px; }
-    .card { background:white; padding:20px; border-radius:10px; margin-bottom:20px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
-    h2 { color:#1e88e5; }
-    .question { margin:10px 0; }
-    .timer { text-align:right; font-weight:bold; color:#d32f2f; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #999; padding: 8px; text-align: center; }
-  </style>
+<meta charset="UTF-8">
+<title>IELTS Practice Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {font-family: Arial, sans-serif; margin:0; background:#f4f6f8;}
+header {background:#1e88e5; color:white; padding:20px; text-align:center;}
+nav {background:#1565c0; display:flex; justify-content:center; gap:15px; padding:10px;}
+nav button {background:white; border:none; padding:10px 14px; border-radius:6px; cursor:pointer; font-weight:bold;}
+.container {max-width:1100px; margin:auto; padding:20px;}
+.card {background:white; padding:20px; border-radius:10px; margin-bottom:20px; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+h2 {color:#1e88e5;}
+.question {margin:10px 0;}
+.timer {text-align:right; font-weight:bold; color:#d32f2f;}
+table {border-collapse: collapse; width: 100%;}
+th, td {border: 1px solid #999; padding: 8px; text-align: center;}
+input[type=text] {width:90px;}
+</style>
 </head>
 <body><header>
-  <h1>Free IELTS Preparation Platform</h1>
-  <p>Learning Modules & Real Computer-Based Mock Tests</p>
+<h1>Free IELTS Practice Platform</h1>
+<p>Interactive Reading & Listening Modules</p>
 </header><nav>
-  <button onclick="show('home')">Home</button>
-  <button onclick="show('reading')">Reading Mock Test</button>
-  <button onclick="show('listening')">Listening Mock Test</button>
-  <button onclick="alert('Writing coming soon')">Writing</button>
-  <button onclick="alert('Speaking coming soon')">Speaking</button>
-</nav><div class="container">  <div id="home" class="section">
-    <div class="card">
-      <h2>IELTS Band Score Table (Official)</h2>
-      <table>
-        <tr><th>Raw Score (out of 40)</th><th>IELTS Band</th></tr>
-        <tr><td>39–40</td><td>9.0</td></tr>
-        <tr><td>37–38</td><td>8.5</td></tr>
-        <tr><td>35–36</td><td>8.0</td></tr>
-        <tr><td>33–34</td><td>7.5</td></tr>
-        <tr><td>30–32</td><td>7.0</td></tr>
-        <tr><td>27–29</td><td>6.5</td></tr>
-        <tr><td>23–26</td><td>6.0</td></tr>
-        <tr><td>19–22</td><td>5.5</td></tr>
-        <tr><td>15–18</td><td>5.0</td></tr>
-        <tr><td>13–14</td><td>4.5</td></tr>
-      </table>
-    </div><div class="card">
-  <h2>IELTS Learning Modules</h2>
-  <ul>
-    <li>📘 Reading – Skimming, Scanning, T/F/NG</li>
-    <li>🎧 Listening – Section 1–4 Practice</li>
-    <li>✍️ Writing – Task 1 & Task 2</li>
-    <li>🗣 Speaking – Part 1, 2, 3</li>
-    <li>📚 Grammar & Vocabulary for IELTS</li>
-  </ul>
-  <p>Use the navigation above to start a mock test.</p>
-</div>
-
-  </div>  <div id="reading" class="section" style="display:none;">
-    <div class="timer" id="timer">Time left: 60:00</div><div class="card">
-  <h2>Reading Passage 1</h2>
-  <p>
-    Modern libraries have transformed from traditional book lenders to digital community hubs. They offer access to computers, workshops, and online resources for the public.
-  </p>
-  <h3>Questions 1–13 (True / False / Not Given)</h3>
-  <div class="question">1. Libraries only lend books. <input type="radio" name="q1"> True <input type="radio" name="q1"> False <input type="radio" name="q1"> Not Given</div>
-  <div class="question">2. Libraries offer computer access. <input type="radio" name="q2"> True <input type="radio" name="q2"> False <input type="radio" name="q2"> Not Given</div>
-  <div class="question">3. Libraries provide workshops. <input type="radio" name="q3"> True <input type="radio" name="q3"> False <input type="radio" name="q3"> Not Given</div>
-  <div class="question">4. Libraries are only funded privately. <input type="radio" name="q4"> True <input type="radio" name="q4"> False <input type="radio" name="q4"> Not Given</div>
-  <div class="question">5. Libraries serve as community hubs. <input type="radio" name="q5"> True <input type="radio" name="q5"> False <input type="radio" name="q5"> Not Given</div>
-  <div class="question">6–13. (Safe, exam-style T/F/NG questions for practice)</div>
-</div>
-
+<button onclick="show('home')">Home</button>
+<button onclick="show('reading')">Reading Mock Test</button>
+<button onclick="show('listening')">Listening Mock Test</button>
+</nav><div class="container"><div id="home" class="section">
 <div class="card">
-  <h2>Reading Passage 2</h2>
-  <p>
-    Renewable energy sources such as solar and wind power have become more popular due to environmental awareness and government incentives.
-  </p>
-  <h3>Questions 14–26 (Multiple Choice & Matching)</h3>
-  <div class="question">14–26. (Safe practice questions: MCQ and matching, exam style)</div>
+<h2>IELTS Band Score Table</h2>
+<table>
+<tr><th>Raw Score (out of 40)</th><th>Band</th></tr>
+<tr><td>39–40</td><td>9.0</td></tr>
+<tr><td>37–38</td><td>8.5</td></tr>
+<tr><td>35–36</td><td>8.0</td></tr>
+<tr><td>33–34</td><td>7.5</td></tr>
+<tr><td>30–32</td><td>7.0</td></tr>
+<tr><td>27–29</td><td>6.5</td></tr>
+<tr><td>23–26</td><td>6.0</td></tr>
+<tr><td>19–22</td><td>5.5</td></tr>
+<tr><td>15–18</td><td>5.0</td></tr>
+<tr><td>13–14</td><td>4.5</td></tr>
+</table>
 </div>
-
 <div class="card">
-  <h2>Reading Passage 3</h2>
-  <p>
-    Motivation can be intrinsic or extrinsic. Research shows intrinsic motivation like personal satisfaction and purpose improves long-term performance.
-  </p>
-  <h3>Questions 27–40 (Sentence Completion & Summary)</h3>
-  <div class="question">27–40. (Safe sentence completion & summary practice questions)</div>
+<h2>IELTS Learning Modules</h2>
+<ul>
+<li>📘 Reading – Skimming, Scanning, T/F/NG</li>
+<li>🎧 Listening – Section 1–4 Practice</li>
+<li>✍️ Writing – Task 1 & Task 2</li>
+<li>🗣 Speaking – Part 1, 2, 3</li>
+<li>📚 Grammar & Vocabulary for IELTS</li>
+</ul>
+<p>Use the navigation above to start a mock test.</p>
 </div>
-
+</div><div id="reading" class="section" style="display:none;">
+<div class="timer" id="readingTimer">Time left: 60:00</div>
+<div class="card">
+<h2>Reading Passage 1</h2>
+<p>Modern libraries provide access to digital resources, workshops, and community programs beyond traditional book lending.</p>
+<h3>Questions 1–10 (T/F/NG)</h3>
+<div class="question">1. Libraries only lend books. <input type="radio" name="q1" value="F"> True <input type="radio" name="q1" value="T"> False <input type="radio" name="q1" value="NG"> Not Given</div>
+<div class="question">2. Libraries offer community programs. <input type="radio" name="q2" value="T"> True <input type="radio" name="q2" value="F"> False <input type="radio" name="q2" value="NG"> Not Given</div>
+<div class="question">3–10. (Safe practice T/F/NG questions)</div>
+</div>
+<div class="card">
+<h2>Reading Passage 2</h2>
+<p>Renewable energy like solar and wind has grown due to environmental awareness and government incentives.</p>
+<h3>Questions 11–25 (MCQ/Matching)</h3>
+<div class="question">11–25. (Safe practice MCQs and matching questions)</div>
+</div>
+<div class="card">
+<h2>Reading Passage 3</h2>
+<p>Intrinsic motivation such as personal satisfaction improves creativity and long-term engagement more than financial rewards alone.</p>
+<h3>Questions 26–40 (Sentence Completion/Summary)</h3>
+<div class="question">26–40. (Safe practice sentence completion and summary questions)</div>
 <button onclick="scoreReading()">Submit Reading Test</button><p id="readingScore"></p>
-
-  </div>  <div id="listening" class="section" style="display:none;">
-    <div class="timer" id="listeningTimer">Time left: 40:00</div><div class="card">
-  <h2>Listening Section 1 – Form Completion</h2>
-  <audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
-  <div class="question">1–10. Complete the form using NO MORE THAN TWO WORDS. (Safe practice questions)</div>
-</div>
-
+</div><div id="listening" class="section" style="display:none;">
+<div class="timer" id="listeningTimer">Time left: 40:00</div>
 <div class="card">
-  <h2>Listening Section 2 – Multiple Choice</h2>
-  <audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg"></audio>
-  <div class="question">11–20. Choose the correct answer from A, B, or C. (Safe practice questions)</div>
+<h2>Listening Section 1 – Form Completion</h2>
+<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
+<div class="question">1–10. Complete the form using NO MORE THAN TWO WORDS. <input type="text" name="l1"></div>
 </div>
-
 <div class="card">
-  <h2>Listening Section 3 – Matching</h2>
-  <audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg"></audio>
-  <div class="question">21–30. Match speakers to statements. (Safe practice questions)</div>
+<h2>Listening Section 2 – Multiple Choice</h2>
+<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg"></audio>
+<div class="question">11–20. Choose correct answer: <input type="radio" name="l2" value="A"> A <input type="radio" name="l2" value="B"> B <input type="radio" name="l2" value="C"> C</div>
 </div>
-
 <div class="card">
-  <h2>Listening Section 4 – Sentence Completion</h2>
-  <audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg"></audio>
-  <div class="question">31–40. Complete sentences using NO MORE THAN THREE WORDS. (Safe practice questions)</div>
+<h2>Listening Section 3 – Matching</h2>
+<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg"></audio>
+<div class="question">21–30. Match speakers to statements: <input type="text" name="l3"></div>
 </div>
-
+<div class="card">
+<h2>Listening Section 4 – Sentence Completion</h2>
+<audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg"></audio>
+<div class="question">31–40. Complete sentences using NO MORE THAN THREE WORDS: <input type="text" name="l4"></div>
 <button onclick="scoreListening()">Submit Listening Test</button><p id="listeningScore"></p>
+</div></div>
+<script>
+function show(id){document.querySelectorAll('.section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';}let readingTime=3600;let readingTimer=document.getElementById('readingTimer'); setInterval(()=>{if(document.getElementById('reading').style.display!=='none'){readingTime--;let m=Math.floor(readingTime/60);let s=readingTime%60;readingTimer.textContent=Time left: ${m}:${s.toString().padStart(2,'0')};if(readingTime<=0)alert('Reading time is up!');}},1000);
 
-  </div></div><script>
-function show(id){document.querySelectorAll('.section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';}
-let time=3600;const timer=document.getElementById('timer');
-setInterval(()=>{if(document.getElementById('reading').style.display!=='none'){time--;const m=Math.floor(time/60);const s=time%60;timer.textContent=`Time left: ${m}:${s.toString().padStart(2,'0')}`;if(time<=0)alert('Time is up!');}},1000);
+let listeningTime=2400;let listeningTimer=document.getElementById('listeningTimer'); setInterval(()=>{if(document.getElementById('listening').style.display!=='none'){listeningTime--;let m=Math.floor(listeningTime/60);let s=listeningTime%60;listeningTimer.textContent=Time left: ${m}:${s.toString().padStart(2,'0')};if(listeningTime<=0)alert('Listening time is up!');}},1000);
 
-function scoreReading(){let score=0;/* Logic placeholder for safe practice scoring */document.getElementById('readingScore').textContent=`Reading Score: ${score}/40 (Band: ${band(score,40)})`;}
-function scoreListening(){let score=0;/* Logic placeholder for safe practice scoring */document.getElementById('listeningScore').textContent=`Listening Score: ${score}/40 (Band: ${band(score,40)})`;}
-function band(score,total){const raw=Math.round((score/total)*40);if(raw>=39)return'9.0';if(raw>=37)return'8.5';if(raw>=35)return'8.0';if(raw>=33)return'7.5';if(raw>=30)return'7.0';if(raw>=27)return'6.5';if(raw>=23)return'6.0';if(raw>=19)return'5.5';if(raw>=15)return'5.0';if(raw>=13)return'4.5';return'4.0 or below';}
-</script></body>
+// Correct answers stored const readingAnswers={q1:'F',q2:'T'}; // Add rest 3–40 similarly const listeningAnswers={l1:'answer1',l2:'A'}; // Add rest 3–40 similarly
+
+function scoreReading(){let score=0;for(let q in readingAnswers){const inputs=document.getElementsByName(q);inputs.forEach(i=>{if(i.checked && i.value===readingAnswers[q])score++;});}document.getElementById('readingScore').textContent=Reading Score: ${score}/40 (Band: ${band(score,40)});} function scoreListening(){let score=0;for(let q in listeningAnswers){const inputs=document.getElementsByName(q);inputs.forEach(i=>{if((i.checked && i.value===listeningAnswers[q]) || (i.value===listeningAnswers[q] && i.type==='text'))score++;});}document.getElementById('listeningScore').textContent=Listening Score: ${score}/40 (Band: ${band(score,40)});}
+
+function band(score,total){const raw=Math.round((score/total)*40);if(raw>=39)return'9.0';if(raw>=37)return'8.5';if(raw>=35)return'8.0';if(raw>=33)return'7.5';if(raw>=30)return'7.0';if(raw>=27)return'6.5';if(raw>=23)return'6.0';if(raw>=19)return'5.5';if(raw>=15)return'5.0';if(raw>=13)return'4.5';return'4.0 or below';} </script>
+
+</body>
 </html>
