@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>IELTS Practice Platform</title>
+<title>IELTS Practice Website</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {font-family: Arial, sans-serif; margin:0; background:#f4f6f8;}
@@ -18,14 +18,18 @@ th, td {border: 1px solid #999; padding: 8px; text-align: center;}
 input[type=text] {width:90px;}
 </style>
 </head>
-<body><header>
+<body>
+<header>
 <h1>Free IELTS Practice Platform</h1>
-<p>Interactive Reading & Listening Modules</p>
-</header><nav>
+<p>Interactive Reading & Listening Mock Tests</p>
+</header>
+<nav>
 <button onclick="show('home')">Home</button>
 <button onclick="show('reading')">Reading Mock Test</button>
 <button onclick="show('listening')">Listening Mock Test</button>
-</nav><div class="container"><div id="home" class="section">
+</nav>
+<div class="container">
+<div id="home" class="section">
 <div class="card">
 <h2>IELTS Band Score Table</h2>
 <table>
@@ -42,45 +46,40 @@ input[type=text] {width:90px;}
 <tr><td>13–14</td><td>4.5</td></tr>
 </table>
 </div>
-<div class="card">
-<h2>IELTS Learning Modules</h2>
-<ul>
-<li>📘 Reading – Skimming, Scanning, T/F/NG</li>
-<li>🎧 Listening – Section 1–4 Practice</li>
-<li>✍️ Writing – Task 1 & Task 2</li>
-<li>🗣 Speaking – Part 1, 2, 3</li>
-<li>📚 Grammar & Vocabulary for IELTS</li>
-</ul>
-<p>Use the navigation above to start a mock test.</p>
 </div>
-</div><div id="reading" class="section" style="display:none;">
+<div id="reading" class="section" style="display:none;">
 <div class="timer" id="readingTimer">Time left: 60:00</div>
 <div class="card">
 <h2>Reading Passage 1</h2>
-<p>Modern libraries provide access to digital resources, workshops, and community programs beyond traditional book lending.</p>
-<h3>Questions 1–10 (T/F/NG)</h3>
+<p>Public libraries have evolved to provide digital resources, workshops, and learning spaces for communities.</p>
+<h3>Questions 1–10 (True / False / Not Given)</h3>
 <div class="question">1. Libraries only lend books. <input type="radio" name="q1" value="F"> True <input type="radio" name="q1" value="T"> False <input type="radio" name="q1" value="NG"> Not Given</div>
 <div class="question">2. Libraries offer community programs. <input type="radio" name="q2" value="T"> True <input type="radio" name="q2" value="F"> False <input type="radio" name="q2" value="NG"> Not Given</div>
-<div class="question">3–10. (Safe practice T/F/NG questions)</div>
+<div class="question">3. Libraries provide access to computers. <input type="radio" name="q3" value="T"> True <input type="radio" name="q3" value="F"> False <input type="radio" name="q3" value="NG"> Not Given</div>
+<div class="question">4. All libraries are privately funded. <input type="radio" name="q4" value="F"> True <input type="radio" name="q4" value="T"> False <input type="radio" name="q4" value="NG"> Not Given</div>
+<div class="question">5. Libraries are important community hubs. <input type="radio" name="q5" value="T"> True <input type="radio" name="q5" value="F"> False <input type="radio" name="q5" value="NG"> Not Given</div>
+<div class="question">6–10. (Safe practice T/F/NG questions)</div>
 </div>
 <div class="card">
 <h2>Reading Passage 2</h2>
-<p>Renewable energy like solar and wind has grown due to environmental awareness and government incentives.</p>
-<h3>Questions 11–25 (MCQ/Matching)</h3>
-<div class="question">11–25. (Safe practice MCQs and matching questions)</div>
+<p>Renewable energy such as wind and solar power has expanded rapidly due to environmental awareness and government incentives.</p>
+<h3>Questions 11–25 (Multiple Choice / Matching)</h3>
+<div class="question">11–25. (Safe practice MCQs and matching)</div>
 </div>
 <div class="card">
 <h2>Reading Passage 3</h2>
-<p>Intrinsic motivation such as personal satisfaction improves creativity and long-term engagement more than financial rewards alone.</p>
-<h3>Questions 26–40 (Sentence Completion/Summary)</h3>
-<div class="question">26–40. (Safe practice sentence completion and summary questions)</div>
+<p>Intrinsic motivation, like personal satisfaction and purpose, often leads to long-term engagement and creativity.</p>
+<h3>Questions 26–40 (Sentence / Summary Completion)</h3>
+<div class="question">26–40. (Safe practice sentence completion)</div>
 <button onclick="scoreReading()">Submit Reading Test</button><p id="readingScore"></p>
-</div><div id="listening" class="section" style="display:none;">
+</div>
+<div id="listening" class="section" style="display:none;">
 <div class="timer" id="listeningTimer">Time left: 40:00</div>
 <div class="card">
 <h2>Listening Section 1 – Form Completion</h2>
+<p>Listen to the conversation and fill the form with correct answers (safe practice dialogue).</p>
 <audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
-<div class="question">1–10. Complete the form using NO MORE THAN TWO WORDS. <input type="text" name="l1"></div>
+<div class="question">1–10. Form completion answers: <input type="text" name="l1"></div>
 </div>
 <div class="card">
 <h2>Listening Section 2 – Multiple Choice</h2>
@@ -95,19 +94,32 @@ input[type=text] {width:90px;}
 <div class="card">
 <h2>Listening Section 4 – Sentence Completion</h2>
 <audio controls><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg"></audio>
-<div class="question">31–40. Complete sentences using NO MORE THAN THREE WORDS: <input type="text" name="l4"></div>
+<div class="question">31–40. Complete sentences: <input type="text" name="l4"></div>
 <button onclick="scoreListening()">Submit Listening Test</button><p id="listeningScore"></p>
-</div></div>
+</div>
+</div>
 <script>
-function show(id){document.querySelectorAll('.section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';}let readingTime=3600;let readingTimer=document.getElementById('readingTimer'); setInterval(()=>{if(document.getElementById('reading').style.display!=='none'){readingTime--;let m=Math.floor(readingTime/60);let s=readingTime%60;readingTimer.textContent=Time left: ${m}:${s.toString().padStart(2,'0')};if(readingTime<=0)alert('Reading time is up!');}},1000);
-
-let listeningTime=2400;let listeningTimer=document.getElementById('listeningTimer'); setInterval(()=>{if(document.getElementById('listening').style.display!=='none'){listeningTime--;let m=Math.floor(listeningTime/60);let s=listeningTime%60;listeningTimer.textContent=Time left: ${m}:${s.toString().padStart(2,'0')};if(listeningTime<=0)alert('Listening time is up!');}},1000);
-
-// Correct answers stored const readingAnswers={q1:'F',q2:'T'}; // Add rest 3–40 similarly const listeningAnswers={l1:'answer1',l2:'A'}; // Add rest 3–40 similarly
-
-function scoreReading(){let score=0;for(let q in readingAnswers){const inputs=document.getElementsByName(q);inputs.forEach(i=>{if(i.checked && i.value===readingAnswers[q])score++;});}document.getElementById('readingScore').textContent=Reading Score: ${score}/40 (Band: ${band(score,40)});} function scoreListening(){let score=0;for(let q in listeningAnswers){const inputs=document.getElementsByName(q);inputs.forEach(i=>{if((i.checked && i.value===listeningAnswers[q]) || (i.value===listeningAnswers[q] && i.type==='text'))score++;});}document.getElementById('listeningScore').textContent=Listening Score: ${score}/40 (Band: ${band(score,40)});}
-
-function band(score,total){const raw=Math.round((score/total)*40);if(raw>=39)return'9.0';if(raw>=37)return'8.5';if(raw>=35)return'8.0';if(raw>=33)return'7.5';if(raw>=30)return'7.0';if(raw>=27)return'6.5';if(raw>=23)return'6.0';if(raw>=19)return'5.5';if(raw>=15)return'5.0';if(raw>=13)return'4.5';return'4.0 or below';} </script>
-
+function show(id){document.querySelectorAll('.section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';}
+let readingTime=3600; let readingTimer=document.getElementById('readingTimer');
+setInterval(()=>{if(document.getElementById('reading').style.display!=='none'){readingTime--; let m=Math.floor(readingTime/60); let s=readingTime%60; readingTimer.textContent=`Time left: ${m}:${s.toString().padStart(2,'0')}`; if(readingTime<=0)alert('Reading time is up!');}},1000);
+let listeningTime=2400; let listeningTimer=document.getElementById('listeningTimer');
+setInterval(()=>{if(document.getElementById('listening').style.display!=='none'){listeningTime--; let m=Math.floor(listeningTime/60); let s=listeningTime%60; listeningTimer.textContent=`Time left: ${m}:${s.toString().padStart(2,'0')}`; if(listeningTime<=0)alert('Listening time is up!');}},1000);
+// Correct answers (safe examples)
+const readingAnswers = {
+q1:'F',q2:'T',q3:'T',q4:'F',q5:'T',q6:'NG',q7:'T',q8:'F',q9:'T',q10:'NG',
+q11:'A',q12:'B',q13:'C',q14:'A',q15:'B',q16:'C',q17:'A',q18:'B',q19:'C',q20:'A',
+q21:'B',q22:'C',q23:'A',q24:'B',q25:'C',q26:'word1',q27:'word2',q28:'word3',q29:'word4',
+q30:'word5',q31:'word6',q32:'word7',q33:'word8',q34:'word9',q35:'word10',q36:'word11',
+q37:'word12',q38:'word13',q39:'word14',q40:'word15'};
+const listeningAnswers = {
+l1:'text1',l2:'A',l3:'B',l4:'C',l5:'text2',l6:'A',l7:'B',l8:'C',l9:'text3',l10:'text4',
+l11:'B',l12:'C',l13:'A',l14:'B',l15:'C',l16:'A',l17:'B',l18:'C',l19:'A',l20:'B',
+l21:'text5',l22:'text6',l23:'text7',l24:'text8',l25:'text9',l26:'text10',l27:'text11',
+l28:'text12',l29:'text13',l30:'text14',l31:'word1',l32:'word2',l33:'word3',l34:'word4',
+l35:'word5',l36:'word6',l37:'word7',l38:'word8',l39:'word9',l40:'word10'};
+function scoreReading(){let score=0;for(let q in readingAnswers){const inputs=document.getElementsByName(q);inputs.forEach(i=>{if(i.checked && i.value===readingAnswers[q])score++;});}document.getElementById('readingScore').textContent=`Reading Score: ${score}/40 (Band: ${band(score,40)})`;}
+function scoreListening(){let score=0;for(let q in listeningAnswers){const inputs=document.getElementsByName(q);inputs.forEach(i=>{if((i.checked && i.value===listeningAnswers[q]) || (i.value===listeningAnswers[q] && i.type==='text'))score++;});}document.getElementById('listeningScore').textContent=`Listening Score: ${score}/40 (Band: ${band(score,40)})`;}
+function band(score,total){const raw=Math.round((score/total)*40);if(raw>=39)return'9.0';if(raw>=37)return'8.5';if(raw>=35)return'8.0';if(raw>=33)return'7.5';if(raw>=30)return'7.0';if(raw>=27)return'6.5';if(raw>=23)return'6.0';if(raw>=19)return'5.5';if(raw>=15)return'5.0';if(raw>=13)return'4.5';return'4.0 or below';}
+</script>
 </body>
 </html>
