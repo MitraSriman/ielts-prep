@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>IELTS CBT Home</title>
+<title>IELTS CBT Full Practice Test</title>
 <style>
 body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f5f7fa}
 header{background:#0a3d62;color:#fff;padding:15px;text-align:center}
@@ -12,9 +12,10 @@ nav button:hover{background:#f1f1f1}
 .container{display:flex;height:calc(100vh - 110px)}
 .left{width:60%;padding:20px;overflow-y:auto;background:#ffffff}
 .right{width:40%;padding:20px;overflow-y:auto;border-left:1px solid #ddd;background:#fafafa}
-button{padding:8px 12px;margin:5px 0}
-h3{margin-top:0}
+.question{margin-bottom:15px}
 .timer{font-weight:bold;color:#c0392b}
+button{padding:8px 12px;margin:5px 0}
+input, select{width:90%;padding:5px;margin-top:5px}
 .map-img{width:100%;margin:10px 0;border:1px solid #ccc;position:relative;height:300px}
 .map-label{position:absolute;background:rgba(255,255,255,0.9);padding:2px 5px;border:1px solid #333;border-radius:3px;cursor:pointer}
 </style>
@@ -37,10 +38,21 @@ h3{margin-top:0}
 </div>
 
 <script>
+// ===== GLOBAL TIMER =====
+let time = 0; let timerInterval;
+function startTimer(){
+  clearInterval(timerInterval);
+  timerInterval = setInterval(()=>{
+    let m = Math.floor(time/60), s = time%60;
+    document.getElementById('timer').innerText = `Time: ${m}:${s<10?'0':''}${s}`;
+    if(time>0) time--;
+  },1000);
+}
+function clearTimer(){clearInterval(timerInterval);}
+
 // ===== HOME PAGE =====
 function showHome(){
-  clearTimer();
-  document.getElementById('timer').innerText='';
+  clearTimer(); document.getElementById('timer').innerText='';
   document.getElementById('leftPane').innerHTML=`
     <h3>IELTS Reading Tips</h3>
     <ul>
@@ -60,8 +72,7 @@ function showHome(){
 
 // ===== MOCK TESTS PAGE =====
 function showMockTests(){
-  clearTimer();
-  document.getElementById('timer').innerText='';
+  clearTimer(); document.getElementById('timer').innerText='';
   document.getElementById('leftPane').innerHTML=`
     <h3>Available Mock Tests</h3>
     <button onclick="startMockTest(1)">Mock Test 1</button>
@@ -71,87 +82,214 @@ function showMockTests(){
   `;
   document.getElementById('rightPane').innerHTML='';
 }
-
 function comingSoon(){alert('Coming Soon');}
 
 // ===== MOCK TEST 1 =====
-// Variables for section
-let time = 0; let timerInterval;
 
-// Reset timer
-function clearTimer(){clearInterval(timerInterval);}
+// READING PASSES AND QUESTIONS
+const readingPassages=[
+{title:"Passage 1: Urban Farming and Sustainability", text:`Urban farming has become increasingly popular in major cities worldwide. Rooftop gardens, vertical farms, and community plots provide local food while reducing transportation costs and carbon emissions. Researchers argue that urban farming strengthens community ties and improves mental health. Critics note limitations such as space constraints and high initial costs.`},
+{title:"Passage 2: Sleep and Cognitive Performance", text:`Sleep plays a critical role in memory consolidation, emotional regulation, and physical recovery. Adults need 7-9 hours per night. Chronic sleep deprivation reduces concentration, weakens immunity, and increases health risks. Modern lifestyles and excessive screen use often disrupt natural sleep cycles.`},
+{title:"Passage 3: History and Evolution of Paper", text:`Paper was invented in China over two thousand years ago. It spread to the Islamic world and later Europe. Paper revolutionized record keeping and education. Despite digital dominance, paper remains widely used due to low cost, reliability, and accessibility.`}
+];
 
-// Example placeholders for Listening and Reading; you will paste your full CBT code here
+const readingQuestions=[
+/* Passage 1 – 13 questions */
+{passage:0,type:'TFNG',question:'Urban farming reduces carbon emissions.',answer:'true'},
+{passage:0,type:'TFNG',question:'Rooftop gardens are only used for profit.',answer:'false'},
+{passage:0,type:'TFNG',question:'Community plots improve mental health.',answer:'true'},
+{passage:0,type:'MC',question:'Which technology is NOT mentioned for urban farming?',options:['Hydroponics','Aeroponics','Smart Irrigation','Solar Panels'],answer:'Solar Panels'},
+{passage:0,type:'SC',question:'What kind of policies help urban agriculture?',answer:'grants'},
+{passage:0,type:'SC',question:'Which innovations make urban farming feasible?',answer:'hydroponics, aeroponics, smart irrigation'},
+{passage:0,type:'TFNG',question:'Urban farms are integrated into education.',answer:'true'},
+{passage:0,type:'MC',question:'Who benefits from urban farming besides food supply?',options:['Students','Companies','Governments','Tourists'],answer:'Students'},
+{passage:0,type:'TFNG',question:'Space constraints are a limitation.',answer:'true'},
+{passage:0,type:'SC',question:'Urban farms improve _______ ties.',answer:'community'},
+{passage:0,type:'MC',question:'Green roofs are mostly applied in?',options:['Schools','Factories','Parks','Shopping centers'],answer:'Schools'},
+{passage:0,type:'TFNG',question:'Hydroponics requires soil.',answer:'false'},
+{passage:0,type:'SC',question:'Urban farms reduce ______ costs.',answer:'transportation'},
+
+/* Passage 2 – 13 questions */
+{passage:1,type:'TFNG',question:'Adults require 7-9 hours of sleep.',answer:'true'},
+{passage:1,type:'TFNG',question:'Shift work improves sleep quality.',answer:'false'},
+{passage:1,type:'MC',question:'Which lifestyle factor disrupts circadian rhythms?',options:['Regular exercise','Excessive screen use','Meditation','Reading'],answer:'Excessive screen use'},
+{passage:1,type:'SC',question:'Sleep deprivation reduces _______.',answer:'concentration'},
+{passage:1,type:'SC',question:'Chronic sleep deprivation affects the ______.',answer:'immune system'},
+{passage:1,type:'TFNG',question:'Napping improves sleep quality.',answer:'true'},
+{passage:1,type:'MC',question:'What economic effect does sleep deprivation have?',options:['Higher productivity','Decreased productivity','No effect','Higher literacy'],answer:'Decreased productivity'},
+{passage:1,type:'TFNG',question:'Emotional processing is affected by sleep.',answer:'true'},
+{passage:1,type:'SC',question:'Irregular sleep patterns affect academic and ______ performance.',answer:'professional'},
+{passage:1,type:'MC',question:'Which method can improve sleep quality?',options:['Excess screen use','Mindfulness','Shift work','Caffeine'],answer:'Mindfulness'},
+{passage:1,type:'TFNG',question:'Stress can increase due to poor sleep.',answer:'true'},
+{passage:1,type:'SC',question:'Adults require ______ hours of sleep per night.',answer:'seven to nine'},
+{passage:1,type:'MC',question:'Which is NOT an effect of sleep deprivation?',options:['Reduced concentration','Improved immunity','Higher health risk','Emotional issues'],answer:'Improved immunity'},
+
+/* Passage 3 – 14 questions */
+{passage:2,type:'TFNG',question:'Paper was invented in China.',answer:'true'},
+{passage:2,type:'TFNG',question:'Paper is no longer used anywhere.',answer:'false'},
+{passage:2,type:'SC',question:'Early paper was made from ______.',answer:'mulberry bark, hemp, recycled rags'},
+{passage:2,type:'MC',question:'Which country contributed to papermaking techniques after China?',options:['Islamic world','India','Japan','USA'],answer:'Islamic world'},
+{passage:2,type:'SC',question:'Modern paper production is ______ and eco-friendly.',answer:'recycled'},
+{passage:2,type:'TFNG',question:'Paper played a role in literacy development.',answer:'true'},
+{passage:2,type:'MC',question:'Which factor contributes to continued paper use?',options:['Affordability','Complexity','Scarcity','Fragility'],answer:'Affordability'},
+{passage:2,type:'SC',question:'Paper revolutionized ______ and education.',answer:'record keeping'},
+{passage:2,type:'TFNG',question:'Eco-friendly papermaking is a recent innovation.',answer:'true'},
+{passage:2,type:'MC',question:'Which was NOT used in early papermaking?',options:['Mulberry bark','Hemp','Wood pulp','Recycled rags'],answer:'Wood pulp'},
+{passage:2,type:'SC',question:'Papermaking improved ______ and durability over centuries.',answer:'quality'},
+{passage:2,type:'TFNG',question:'Paper enabled mass production.',answer:'true'},
+{passage:2,type:'SC',question:'Paper helped dissemination of ______ and knowledge.',answer:'literacy'},
+{passage:2,type:'MC',question:'Which is a modern papermaking innovation?',options:['Eco-friendly chemical processing','Stone engraving','Manual labor','Clay tablets'],answer:'Eco-friendly chemical processing'}
+];
+
+// LISTENING SECTIONS
+const listeningSections=[
+{part:"Part 1", audio:"You are booking a room. Rent 150 pounds per week. Utilities included. Minimum stay 6 months. Contact via email. Second floor.", questions:[
+{id:"l1",q:"Weekly rent?",answer:"150"},
+{id:"l2",q:"Is utilities included?",answer:"yes"},
+{id:"l3",q:"Minimum stay?",answer:"6"},
+{id:"l4",q:"Contact method?",answer:"email"},
+{id:"l5",q:"Floor?",answer:"second"},
+{id:"l6",q:"Deposit required?",answer:"yes"},
+{id:"l7",q:"People sharing kitchen?",answer:"2"},
+{id:"l8",q:"Minutes to bus stop?",answer:"5"},
+{id:"l9",q:"Pets allowed?",answer:"no"},
+{id:"l10",q:"Move-in month?",answer:"september"}]},
+{part:"Part 2", audio:"Dialogue about Riverside Sports Centre ...", questions:[
+{id:"l11",q:"Month of opening?",answer:"april"},
+{id:"l12",q:"Who is the pool designed for?",answer:"general public"},
+{id:"l13",q:"Where is gym equipment from?",answer:"germany"},
+{id:"l14",q:"Which sports are played in hall?",answer:"indoor football and badminton"},
+{id:"l15",q:"Who can use free parking?",answer:"everyone"},
+{id:"l16",q:"When are yoga classes?",answer:"weekday"},
+{id:"l17",q:"Type of training?",answer:"personal"},
+{id:"l18",q:"Cafe serves?",answer:"healthy"},
+{id:"l19",q:"Closing time?",answer:"10"},
+{id:"l20",q:"Office handling complaints?",answer:"management"}]},
+{part:"Part 3", audio:"Students discuss library layout. Reading rooms left, computer stations right, group tables center, staff office back, lounge entrance.", mapImage:"https://i.imgur.com/LIBRARYMAP.png", questions:[
+{id:"l21",q:"Where are the reading rooms located?",answer:"left"},
+{id:"l22",q:"Where are the computer stations?",answer:"right"},
+{id:"l23",q:"Where are the group tables?",answer:"center"},
+{id:"l24",q:"Where is the staff office?",answer:"back"},
+{id:"l25",q:"Where is the lounge?",answer:"entrance"},
+{id:"l26",q:"Number of group tables?",answer:"3"},
+{id:"l27",q:"Nearest room to entrance?",answer:"lounge"},
+{id:"l28",q:"Which room is at the back?",answer:"staff office"},
+{id:"l29",q:"Floor of library?",answer:"1"},
+{id:"l30",q:"Section opposite computer stations?",answer:"reading rooms"}]},
+{part:"Part 4", audio:"Lecture on sustainability and renewable energy. Wind and solar power, recycling, government incentives.", questions:[
+{id:"l31",q:"Sustainability protects future what?",answer:"needs"},
+{id:"l32",q:"Which century popularised sustainability?",answer:"twentieth"},
+{id:"l33",q:"What type of farming causes deforestation?",answer:"intensive"},
+{id:"l34",q:"Urban areas produce which emissions?",answer:"carbon"},
+{id:"l35",q:"Recycling reduces which waste?",answer:"landfill"},
+{id:"l36",q:"Wind and which power are renewable?",answer:"solar"},
+{id:"l37",q:"Governments use what to encourage sustainability?",answer:"incentives"},
+{id:"l38",q:"Behaviour change reduces what consumption?",answer:"energy"},
+{id:"l39",q:"Education raises what awareness?",answer:"environmental"},
+{id:"l40",q:"Sustainability requires global what?",answer:"cooperation"}]}
+];
+
+let currentListening=0; let played=[false,false,false,false];
+
+function playListening(i){
+  if(played[i]){alert('Already played'); return;}
+  let u=new SpeechSynthesisUtterance(listeningSections[i].audio);
+  u.lang='en-GB'; u.rate=0.9;
+  u.onend=()=>played[i]=true;
+  speechSynthesis.speak(u);
+}
+
+// LOAD MOCK TEST 1
 function startMockTest(id){
-  if(id===1){
-    loadListeningTest1();
+  if(id!==1) return;
+  currentListening=0; played=[false,false,false,false];
+  loadListening();
+}
+
+// LOAD LISTENING
+function loadListening(){
+  time=2400; startTimer();
+  const s=listeningSections[currentListening];
+  let html=`<h3>${s.part}</h3><button onclick='playListening(${currentListening})'>▶ Play Audio</button>`;
+  if(s.mapImage){
+    html+=`<div class='map-img'><img src='${s.mapImage}' style='width:100%;height:100%'>`;
+    const labels=[
+      {text:'Reading Rooms',top:'50px',left:'30px',qid:'l21',val:'left'},
+      {text:'Computer Stations',top:'50px',left:'200px',qid:'l22',val:'right'},
+      {text:'Group Tables',top:'150px',left:'120px',qid:'l23',val:'center'},
+      {text:'Staff Office',top:'250px',left:'200px',qid:'l24',val:'back'},
+      {text:'Lounge',top:'250px',left:'30px',qid:'l25',val:'entrance'}
+    ];
+    labels.forEach(l=>{html+=`<div class='map-label' style='top:${l.top};left:${l.left}' onclick="document.getElementById('${l.qid}').value='${l.val}'">${l.text}</div>`;});
+    html+="</div>";
   }
+  s.questions.forEach((q,j)=>{html+=`<div class='question'><label>${j+1}. ${q.q}</label><br><input type='text' id='${q.id}'></div>`;});
+  document.getElementById('leftPane').innerHTML = html;
+  document.getElementById('rightPane').innerHTML = `<button onclick='prevListening()'>Previous Section</button> <button onclick='nextListening()'>Next Section</button>`;
 }
 
-// ===== LOAD LISTENING (part of Mock Test 1) =====
-function loadListeningTest1(){
-  time=2400;
-  startTimerMock();
-  document.getElementById('timer').innerText='Time: 40:00';
-  document.getElementById('leftPane').innerHTML=`
-    <h3>Listening Section</h3>
-    <p>Audio/Instructions here</p>
-    <button onclick="playAudio()">▶ Play Audio</button>
-  `;
-  document.getElementById('rightPane').innerHTML=`
-    <div class='question'>
-      <label>1. Example question?</label><br>
-      <input type='text' id='l1'>
-    </div>
-    <div class='question'>
-      <label>2. Example question?</label><br>
-      <input type='text' id='l2'>
-    </div>
-    <button onclick="loadReadingTest1()">Next: Reading Section</button>
-  `;
+// LISTENING NAV
+function nextListening(){if(currentListening<listeningSections.length-1){currentListening++; loadListening();} else {loadReading(0);}}
+function prevListening(){if(currentListening>0){currentListening--; loadListening();}}
+
+// LOAD READING
+let currentReading=0;
+function loadReading(index){
+  currentReading=index; time=3600; startTimer();
+  const p = readingPassages[currentReading];
+  let html = `<h3>${p.title}</h3><p>${p.text}</p>`;
+  readingQuestions.filter(q=>q.passage===currentReading).forEach((q,j)=>{
+    if(q.type==='TFNG') html+=`<div class='question'><label>${j+1}. ${q.question}</label><br><select id='r${currentReading}_${j}'><option value=''>Select</option><option value='true'>True</option><option value='false'>False</option><option value='ng'>Not Given</option></select></div>`;
+    else if(q.type==='MC') html+=`<div class='question'><label>${j+1}. ${q.question}</label><br><select id='r${currentReading}_${j}'><option value=''>Select</option>${q.options.map(o=>`<option value='${o}'>${o}</option>`).join('')}</select></div>`;
+    else if(q.type==='SC') html+=`<div class='question'><label>${j+1}. ${q.question}</label><br><input type='text' id='r${currentReading}_${j}'></div>`;
+  });
+  document.getElementById('leftPane').innerHTML = html;
+  let navHTML = "";
+  if(currentReading>0) navHTML+=`<button onclick='loadReading(${currentReading-1})'>Previous Passage</button>`;
+  if(currentReading<readingPassages.length-1) navHTML+=`<button onclick='loadReading(${currentReading+1})'>Next Passage</button>`;
+  navHTML+=`<button onclick='submitTest()'>Submit Test</button>`;
+  document.getElementById('rightPane').innerHTML = navHTML;
 }
 
-function playAudio(){
-  let audio = new SpeechSynthesisUtterance("This is example audio for listening section.");
-  audio.lang='en-GB';
-  speechSynthesis.speak(audio);
+// SUBMIT TEST
+function submitTest(){
+  clearTimer();
+  // LISTENING SCORE
+  let lscore=0;
+  listeningSections.forEach(sec=>sec.questions.forEach(q=>{
+    let ans=document.getElementById(q.id)?.value.toLowerCase().trim();
+    if(ans===q.answer.toLowerCase()) lscore++;
+  }));
+  let lband = getBand(lscore);
+
+  // READING SCORE
+  let rscore=0;
+  readingQuestions.forEach((q,i)=>{
+    let ans;
+    if(q.type==='TFNG' || q.type==='MC') ans=document.getElementById(`r${q.passage}_${i}`)?.value.toLowerCase().trim();
+    else ans=document.getElementById(`r${q.passage}_${i}`)?.value.toLowerCase().trim();
+    if(ans===q.answer.toLowerCase()) rscore++;
+  });
+  let rband = getBand(rscore);
+
+  alert(`Listening: ${lscore}/40 | Band: ${lband}\nReading: ${rscore}/40 | Band: ${rband}`);
+}
+function getBand(score){
+  if(score>=39) return 9;
+  if(score>=37) return 8.5;
+  if(score>=35) return 8;
+  if(score>=32) return 7.5;
+  if(score>=30) return 7;
+  if(score>=26) return 6.5;
+  if(score>=23) return 6;
+  if(score>=18) return 5.5;
+  if(score>=16) return 5;
+  return 4.5;
 }
 
-// ===== LOAD READING (part of Mock Test 1) =====
-function loadReadingTest1(){
-  time=3600;
-  startTimerMock();
-  document.getElementById('timer').innerText='Time: 60:00';
-  document.getElementById('leftPane').innerHTML=`
-    <h3>Reading Section</h3>
-    <p>Passages appear here on left</p>
-  `;
-  document.getElementById('rightPane').innerHTML=`
-    <div class='question'>
-      <label>1. Example reading question?</label><br>
-      <input type='text' id='r1'>
-    </div>
-    <div class='question'>
-      <label>2. Example reading question?</label><br>
-      <input type='text' id='r2'>
-    </div>
-    <button onclick="alert('Test Submitted')">Submit Test</button>
-  `;
-}
-
-// ===== TIMER FUNCTION =====
-function startTimerMock(){
-  clearInterval(timerInterval);
-  timerInterval=setInterval(()=>{
-    let m=Math.floor(time/60), s=time%60;
-    document.getElementById('timer').innerText=`Time: ${m}:${s<10?'0':''}${s}`;
-    if(time>0) time--;
-  },1000);
-}
-
-// ===== INITIAL LOAD =====
+// INITIAL LOAD
 showHome();
-</script>
 
+</script>
 </body>
 </html>
